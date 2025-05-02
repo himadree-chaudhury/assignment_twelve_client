@@ -11,7 +11,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const Navbar = () => {
   // *Context States
-  const { user, logOut } = useAuth();
+  const { user=true, logOut } = useAuth();
 
   // *Data States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -117,7 +117,7 @@ const Navbar = () => {
             <NavLink
               style={navLinkStyles}
               onClick={() => setIsMenuOpen(false)}
-              to="/allcars"
+              to="/all-biodata"
               className="block py-2"
             >
               All Biodata
@@ -127,7 +127,7 @@ const Navbar = () => {
             <NavLink
               style={navLinkStyles}
               onClick={() => setIsMenuOpen(false)}
-              to="/allcars"
+              to="/about-us"
               className="block py-2"
             >
               About Us
@@ -137,7 +137,7 @@ const Navbar = () => {
             <NavLink
               style={navLinkStyles}
               onClick={() => setIsMenuOpen(false)}
-              to="/allcars"
+              to="/contact-us"
               className="block py-2"
             >
               Contact Us
@@ -150,7 +150,7 @@ const Navbar = () => {
                 <NavLink
                   style={navLinkStyles}
                   onClick={() => setIsMenuOpen(false)}
-                  to="/addcar"
+                  to="/dashboard"
                   className="block py-2"
                 >
                   Dashboard
@@ -183,21 +183,21 @@ const Navbar = () => {
           <NavLink
             style={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
-            to="/allcars"
+            to="/all-biodata"
           >
             All Biodata
           </NavLink>
           <NavLink
             style={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
-            to="/allcars"
+            to="/about-us"
           >
             About Us
           </NavLink>
           <NavLink
             style={navLinkStyles}
             onClick={() => setIsMenuOpen(false)}
-            to="/allcars"
+            to="/contact-us"
           >
             Contact Us
           </NavLink>
@@ -207,7 +207,7 @@ const Navbar = () => {
               <NavLink
                 style={navLinkStyles}
                 onClick={() => setIsMenuOpen(false)}
-                to="/addcar"
+                to="/dashboard"
               >
                 Dashboard
               </NavLink>
