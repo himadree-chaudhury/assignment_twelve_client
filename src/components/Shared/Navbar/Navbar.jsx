@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Title from "../Utilities/Title";
 import useAuth from "../../../hooks/useAuth";
 // eslint-disable-next-line no-unused-vars
@@ -8,26 +8,20 @@ import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import ThemeToggle from "../Utilities/ThemeToggle";
+import { ThemeContext } from "../../../providers/ThemeProvider";
 
 const Navbar = () => {
   // *Context States
   const { user = true, logOut } = useAuth();
+  const [isDark] = useContext(ThemeContext);
 
   // *Data States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(
-    document.documentElement.classList.contains("dark"),
-  );
 
   // *Toggle Mobile Menu Open/Close
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  // *Toggle Dark Mode
-  const toggleDarkMode = () => {
-    document.documentElement.classList.toggle("dark");
-    setIsDark(document.documentElement.classList.contains("dark"));
   };
 
   // *Styles For Active/Inactive Links
@@ -278,22 +272,7 @@ const Navbar = () => {
           </Menu>
 
           {/* Dark Mode Toggle Button */}
-          <motion.button
-            onClick={toggleDarkMode}
-            className={`rounded-full p-2 ${
-              isDark
-                ? "bg-gray-700 hover:bg-gray-600"
-                : "bg-gray-200 hover:bg-gray-300"
-            } transition-colors duration-300`}
-            whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-          >
-            {isDark ? (
-              <FaSun className="text-yellow-400" />
-            ) : (
-              <FaMoon className="text-gray-700" />
-            )}
-          </motion.button>
+          <ThemeToggle />
           {/* Mobile Menu Toggle Button */}
           <motion.button
             onClick={toggleMenu}

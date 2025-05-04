@@ -14,6 +14,10 @@ import ViewBiodata from "../pages/Dashboard/User/ViewBiodata";
 import MyRequests from "../pages/Dashboard/User/MyRequests";
 import MyFavourites from "../pages/Dashboard/User/MyFavourites";
 import GotMarried from "../pages/Dashboard/User/GotMarried";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import ApprovePremiums from "../pages/Dashboard/Admin/ApprovePremiums";
+import ApproveContacts from "../pages/Dashboard/Admin/ApproveContacts";
+import ApproveStories from "../pages/Dashboard/Admin/ApproveStories";
 
 const route = createBrowserRouter([
   {
@@ -56,6 +60,7 @@ const route = createBrowserRouter([
         index: true,
         Component: Statistics,
       },
+      // *Normal user routes
       {
         path: "edit-biodata",
         Component: EditBiodata,
@@ -75,6 +80,28 @@ const route = createBrowserRouter([
       {
         path: "got-married",
         Component: GotMarried,
+      },
+      // *Admin special routes
+      {
+        path: "manage-users",
+        Component: ManageUsers,
+      },
+      {
+        path: "approved-premium",
+        Component: ApprovePremiums,
+      },
+      {
+        path: "approved-contact-request",
+        Component: ApproveContacts,
+      },
+      {
+        path: "success-story",
+        Component: ApproveStories,
+      },
+      // *Common route
+      {
+        path: "statistics",
+        Component: Statistics,
       },
     ],
   },

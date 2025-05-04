@@ -1,7 +1,7 @@
 const Statistics = () => {
     return (
         <div >
-            Welcome To Pathway Dashboard
+            Welcome To Pathway Dashboard - Statistics
         </div>
     );
 };
