@@ -1,19 +1,19 @@
 import React, { useContext, useState } from "react";
 import Title from "../Utilities/Title";
-import useAuth from "../../../hooks/useAuth";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
-import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
+import { FiAirplay, FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import ThemeToggle from "../Utilities/ThemeToggle";
 import { ThemeContext } from "../../../providers/ThemeProvider";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
   // *Context States
-  const { user = true, logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const [isDark] = useContext(ThemeContext);
 
   // *Data States
@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   // *Handle Logout
-  const handleLogout = () => {
+const handleLogout = () => {
     logOut()
       .then(() => {
         setIsMenuOpen(false);
@@ -51,7 +51,7 @@ const Navbar = () => {
         toast.error("Something went wrong. Try again");
       });
   };
-
+  
   // *Animation Variants
   const menuVariants = {
     closed: {
@@ -256,18 +256,35 @@ const Navbar = () => {
               anchor="bottom"
               className="bg-background-light dark:bg-background-dark font-button dark:shadow-text-secondary z-[100] mt-2 rounded-lg px-5 py-2 shadow-md"
             >
-              {["Profile", "Login", "Logout"].map((profileMenu) => (
+              {user ? (
+                <>
+                  <MenuItem>
+                    <Link
+                      className="hover:text-text-secondary dark:hover:text-text-secondary-dark flex-centric gap-2 text-lg dark:text-white"
+                      onClick={handleLogout}
+                    >
+                      Logout <FiLogOut />
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      className="hover:text-text-secondary dark:hover:text-text-secondary-dark flex-centric gap-2 text-lg dark:text-white"
+                      to=""
+                    >
+                      Profile <FiAirplay />
+                    </Link>
+                  </MenuItem>
+                </>
+              ) : (
                 <MenuItem>
                   <Link
                     className="hover:text-text-secondary dark:hover:text-text-secondary-dark flex-centric gap-2 text-lg dark:text-white"
-                    to="/settings"
+                    to="login"
                   >
-                    {profileMenu} <FiLogIn /> <FiLogOut />
+                    Login <FiLogIn />
                   </Link>
-                  {/* <FiLogIn />
-                  <FiLogOut /> */}
                 </MenuItem>
-              ))}
+              )}
             </MenuItems>
           </Menu>
 

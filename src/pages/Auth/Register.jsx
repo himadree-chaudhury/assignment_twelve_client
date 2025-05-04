@@ -40,7 +40,7 @@ const Register = () => {
 
       // *Update User Profile With Name And PhotoURL
       await updateUserProfile(data.name, data.photoURL);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }
@@ -50,7 +50,7 @@ const Register = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       setError(error.message);
       console.error("Google sign-in error:", error);
@@ -85,7 +85,7 @@ const Register = () => {
       animate="visible"
       variants={containerVariants}
     >
-      <title>Register | driveXpress</title>
+      <title>Register | Pathway</title>
       <motion.div className="card w-full max-w-md" variants={itemVariants}>
         <div className="p-8">
           <motion.h2 className="mb-6 text-center" variants={itemVariants}>

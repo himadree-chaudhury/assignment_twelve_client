@@ -20,15 +20,18 @@ import { GiGlobeRing } from "react-icons/gi";
 import { TbArrowBarLeft } from "react-icons/tb";
 import AsideLinks from "./AsideLinks";
 import { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { Tooltip } from "react-tooltip";
 import { ThemeContext } from "../../providers/ThemeProvider";
 import ThemeToggle from "../Shared/Utilities/ThemeToggle";
-import { FaRegHandPointRight } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Aside = () => {
-  const [expanded, setExpanded] = useState(true);
   const [isDark] = useContext(ThemeContext);
+  const { logOut } = useAuth();
+  const [expanded, setExpanded] = useState(true);
+  const navigate = useNavigate();
 
   // *Check screen size
   useEffect(() => {
@@ -39,6 +42,19 @@ const Aside = () => {
     };
     checkScreenSize();
   }, []);
+
+  // *Handle Logout
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        navigate("/login");
+        toast.success("Logout successful!");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Something went wrong. Try again");
+      });
+  };
 
   return (
     <aside className="h-screen bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
@@ -229,6 +245,7 @@ const Aside = () => {
               {/* logout button */}
               <a data-tooltip-id="logout" data-tooltip-content="Logout">
                 <button
+                  onClick={handleLogout}
                   className={`border-primary bg-accent hover:bg-primary rounded-full border-2 p-2 text-2xl text-white transition-all duration-200 ${
                     expanded && "ml-5"
                   }`}

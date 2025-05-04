@@ -18,6 +18,7 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import ApprovePremiums from "../pages/Dashboard/Admin/ApprovePremiums";
 import ApproveContacts from "../pages/Dashboard/Admin/ApproveContacts";
 import ApproveStories from "../pages/Dashboard/Admin/ApproveStories";
+import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
 
 const route = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const route = createBrowserRouter([
       {
         path: "all-biodata",
         Component: Biodata,
+      },
+      {
+        path: "biodata-details/:id",
+        Component: BiodataDetails,
       },
       {
         path: "about-us",
