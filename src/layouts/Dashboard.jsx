@@ -16,7 +16,7 @@ const Dashboard = () => {
           {/* Side Navigation */}
           <Aside />
           {/* Dynamic Content Container */}
-          <Outlet  />
+          <Outlet />
         </div>
       </div>
     </div>

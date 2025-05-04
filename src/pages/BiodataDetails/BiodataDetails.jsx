@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const BiodataDetails = () => {
-    return (
-        <div>
-            HI
-        </div>
-    );
+  return <div>HI</div>;
 };
 
 export default BiodataDetails;

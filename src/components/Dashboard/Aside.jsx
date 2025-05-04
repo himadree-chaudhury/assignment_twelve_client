@@ -20,7 +20,7 @@ import { GiGlobeRing } from "react-icons/gi";
 import { TbArrowBarLeft } from "react-icons/tb";
 import AsideLinks from "./AsideLinks";
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import { Tooltip } from "react-tooltip";
 import { ThemeContext } from "../../providers/ThemeProvider";
 import ThemeToggle from "../Shared/Utilities/ThemeToggle";
@@ -228,9 +228,11 @@ const Aside = () => {
           <hr className="bg-primary my-2 h-0.5 border-t-0" />
           {/* Profile & logout */}
           <div className="flex-centric justify-start">
-            <div className="rounded-full bg-gray-300 p-3">
-              <FiUser className="text-accent text-2xl" />
-            </div>
+            <Link to="/dashboard/profile">
+              <div className="rounded-full bg-gray-300 p-3">
+                <FiUser className="text-accent text-2xl" />
+              </div>
+            </Link>
 
             <div
               className={`flex-centric overflow-hidden transition-all duration-200 ${

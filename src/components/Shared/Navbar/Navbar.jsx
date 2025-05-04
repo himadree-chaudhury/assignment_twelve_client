@@ -40,7 +40,7 @@ const Navbar = () => {
   };
 
   // *Handle Logout
-const handleLogout = () => {
+  const handleLogout = () => {
     logOut()
       .then(() => {
         setIsMenuOpen(false);
@@ -51,7 +51,7 @@ const handleLogout = () => {
         toast.error("Something went wrong. Try again");
       });
   };
-  
+
   // *Animation Variants
   const menuVariants = {
     closed: {
@@ -269,7 +269,7 @@ const handleLogout = () => {
                   <MenuItem>
                     <Link
                       className="hover:text-text-secondary dark:hover:text-text-secondary-dark flex-centric gap-2 text-lg dark:text-white"
-                      to=""
+                      to="/dashboard/profile"
                     >
                       Profile <FiAirplay />
                     </Link>

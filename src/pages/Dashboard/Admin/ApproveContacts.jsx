@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const ApproveContacts = () => {
-    return (
-        <div>
-            This is approved contact
-        </div>
-    );
+  return <div>This is approved contact</div>;
 };
 
 export default ApproveContacts;

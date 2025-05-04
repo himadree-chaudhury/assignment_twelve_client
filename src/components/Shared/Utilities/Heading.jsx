@@ -30,7 +30,7 @@ const Heading = ({ title, heading, description }) => {
 
       {/* Description */}
       <motion.p
-        className="pb-5 w-3/4 mx-auto"
+        className="mx-auto w-3/4 pb-5"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}

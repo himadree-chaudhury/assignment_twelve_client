@@ -52,7 +52,7 @@ const Banner = () => {
   ];
   return (
     <section>
-      <div className="w-full mb-5">
+      <div className="mb-5 w-full">
         {/* Swiper component */}
         <Swiper
           spaceBetween={0}

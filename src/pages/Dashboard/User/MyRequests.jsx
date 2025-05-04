@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const MyRequests = () => {
-    return (
-        <div>
-           Request 
-        </div>
-    );
+  return <div>Request</div>;
 };
 
 export default MyRequests;
