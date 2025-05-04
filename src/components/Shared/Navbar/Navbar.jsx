@@ -4,14 +4,14 @@ import useAuth from "../../../hooks/useAuth";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa";
-import { FiUser } from "react-icons/fi";
+import { FiLogIn, FiLogOut, FiUser } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const Navbar = () => {
   // *Context States
-  const { user=true, logOut } = useAuth();
+  const { user = true, logOut } = useAuth();
 
   // *Data States
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -255,7 +255,7 @@ const Navbar = () => {
                 whileTap={{ scale: 0.9 }}
                 whileHover={{ scale: 1.1 }}
               >
-                <FiUser />
+                <FiUser className="text-accent" />
               </motion.div>
             </MenuButton>
             <MenuItems
@@ -265,11 +265,13 @@ const Navbar = () => {
               {["Profile", "Login", "Logout"].map((profileMenu) => (
                 <MenuItem>
                   <Link
-                    className="hover:text-text-secondary dark:hover:text-text-secondary-dark block text-lg dark:text-white"
+                    className="hover:text-text-secondary dark:hover:text-text-secondary-dark flex-centric gap-2 text-lg dark:text-white"
                     to="/settings"
                   >
-                    {profileMenu}
+                    {profileMenu} <FiLogIn /> <FiLogOut />
                   </Link>
+                  {/* <FiLogIn />
+                  <FiLogOut /> */}
                 </MenuItem>
               ))}
             </MenuItems>

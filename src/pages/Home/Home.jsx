@@ -1,4 +1,3 @@
-import React from 'react';
 import Banner from '../../components/Home/Banner';
 import Heading from '../../components/Shared/Utilities/Heading';
 
