@@ -478,5 +478,32 @@
     "mobileNumber": "+8801612345697",
     "biodataCreatedTime": "2025-05-03T14:00:00.000Z",
     "description": "Meticulous accountant with a love for sports. Looking for a partner who enjoys a balanced and active life."
+  },{
+    "_id": {
+      "$oid": "68149d0ea5121034e7b4dc3d"
+    },
+    "biodataId": 20,
+    "isPremium": false,
+    "biodataType": "Male",
+    "name": "Zahid Hasan",
+    "profileImage": "https://mighty.tools/mockmind-api/content/human/99.jpg",
+    "dateOfBirth": "1989-06-28T09:00:00.000Z",
+    "height": 173,
+    "weight": 69,
+    "age": 35,
+    "occupation": "Accountant",
+    "race": "Dark Brown",
+    "religion": "Muslim",
+    "fathersName": "Monir Hasan",
+    "mothersName": "Afsana Begum",
+    "permanentDivision": "Rangpur",
+    "presentDivision": "Sylhet",
+    "expectedPartnerAge": 30,
+    "expectedPartnerHeight": 158,
+    "expectedPartnerWeight": 50,
+    "contactEmail": "zahid.hasan@example.com",
+    "mobileNumber": "+8801612345697",
+    "biodataCreatedTime": "2025-05-03T14:00:00.000Z",
+    "description": "Meticulous accountant with a love for sports. Looking for a partner who enjoys a balanced and active life."
   }
 ]

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useAuth from "./useAuth";
 
 // *Set Axios Base Configuration

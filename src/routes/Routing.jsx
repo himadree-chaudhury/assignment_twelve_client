@@ -20,6 +20,7 @@ import ApproveContacts from "../pages/Dashboard/Admin/ApproveContacts";
 import ApproveStories from "../pages/Dashboard/Admin/ApproveStories";
 import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
 import Profile from "../pages/Profile/Profile";
+import PrivateRoute from "./PrivateRoute";
 
 const route = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const route = createBrowserRouter([
       },
       {
         path: "biodata-details/:id",
-        Component: BiodataDetails,
+        element: (
+          <PrivateRoute>
+            <BiodataDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "about-us",
