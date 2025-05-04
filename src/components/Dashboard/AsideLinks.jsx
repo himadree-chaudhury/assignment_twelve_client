@@ -1,13 +1,13 @@
 const AsideLinks = ({ icon, text, alert, active, expanded }) => {
   return (
     <div
-      className={`group font-button relative my-1 flex cursor-pointer items-center rounded-md px-3 py-2 transition-colors duration-200 ${
+      className={`group font-button relative my-1 flex cursor-pointer items-center rounded-md px-3 py-2 transition-colors duration-200 text-lg ${
         active
           ? "from-accent to-secondary bg-gradient-to-tr font-semibold text-white"
           : "hover:bg-primary-hover hover:text-white"
       } `}
     >
-      <span className="text-lg"> {icon}</span>
+      <span> {icon}</span>
       <span
         className={`overflow-hidden transition-all duration-200 ${
           expanded ? "ml-3" : "w-0"

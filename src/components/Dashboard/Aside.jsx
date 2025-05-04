@@ -3,6 +3,7 @@ import {
   FiEdit,
   FiFilePlus,
   FiFileText,
+  FiHome,
   FiKey,
   FiLogOut,
   FiMoon,
@@ -40,7 +41,7 @@ const Aside = () => {
   }, []);
 
   return (
-    <aside className="h-screen bg-gradient-to-br from-rose-200 to-pink-300 dark:text-black">
+    <aside className="h-screen bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
       <nav className="flex h-full flex-col p-3 shadow-sm">
         {/* title & collapse button */}
         <div className="flex-centric">
@@ -179,22 +180,33 @@ const Aside = () => {
                 />
               )}
             </NavLink>
+            <hr className="bg-primary my-2 h-0.5 border-t-0" />
+            {/* home navigation */}
+            <NavLink to="/">
+              {({ isActive }) => (
+                <AsideLinks
+                  icon={<FiHome />}
+                  text={"Return To Home"}
+                  expanded={expanded}
+                  active={isActive}
+                />
+              )}
+            </NavLink>
           </div>
           {/* Dark mode toggling */}
           <div className="flex-centric justify-start">
-            <div className="flex-centric ml-3 text-2xl">
-              {isDark ? (
-                <FiSun onClick={() => setExpanded(!expanded)} />
-              ) : (
-                <FiMoon onClick={() => setExpanded(!expanded)} />
-              )}
+            {/* toggling button */}
+            <div className="ml-2">
+              <ThemeToggle />
             </div>
+            {/* mood details */}
             <div
-              className={`flex-centric gap-6 overflow-hidden py-2 transition-all duration-200 ${expanded ? "ml-4" : "w-0"}`}
+              className={`flex-centric gap-2 overflow-hidden py-2 transition-all duration-200 ${expanded ? "ml-5" : "w-0"}`}
             >
               <h3>{isDark ? "Light Mood" : "Night Mood"}</h3>
-              <FaRegHandPointRight />
-              <ThemeToggle />
+              <div className="flex-centric text-2xl">
+                {isDark ? <FiSun /> : <FiMoon />}
+              </div>
             </div>
           </div>
           <hr className="bg-primary my-2 h-0.5 border-t-0" />
