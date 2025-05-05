@@ -36,9 +36,7 @@ const BiodataDetails = () => {
       {/* Header Section with Favourite Button */}
       <div className="mb-6 flex flex-col items-start justify-between md:flex-row lg:items-center">
         <div className="flex items-center space-x-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {biodata.name}'s Profile
-          </h1>
+          <h2 className="">{biodata.name}'s Profile</h2>
         </div>
         {biodata.isPremium && (
           <span className="text-primary rounded-full bg-pink-100 px-3 py-1 text-sm font-medium">
@@ -50,7 +48,7 @@ const BiodataDetails = () => {
       {/* Profile Image and Basic Info */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Image */}
-        <div className="h-96 w-full">
+        <div className="w-full xl:h-96">
           <img
             className="h-full w-full rounded-lg object-cover shadow-md"
             src={biodata.profileImage || "https://via.placeholder.com/400x300"}
@@ -59,35 +57,37 @@ const BiodataDetails = () => {
         </div>
 
         {/* Basic Details */}
-        <div className="space-y-4">
-          <p>
-            <strong>Type:</strong> {biodata.biodataType}
-          </p>
-          <p>
-            <strong>Date of Birth:</strong>{" "}
-            {new Date(biodata.dateOfBirth).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Age:</strong> {biodata.age} years
-          </p>
-          <p>
-            <strong>Height:</strong> {biodata.height} cm
-          </p>
-          <p>
-            <strong>Weight:</strong> {biodata.weight} kg
-          </p>
-          <p>
-            <strong>Occupation:</strong> {biodata.occupation}
-          </p>
-          <p>
-            <strong>Color:</strong> {biodata.race}
-          </p>
-          <p>
-            <strong>Religion:</strong> {biodata.religion}
-          </p>
+        <div className="card flex flex-col gap-4">
+          <div className="grow space-y-6 xl:space-y-4">
+            <p>
+              <strong>Type:</strong> {biodata.biodataType}
+            </p>
+            <p>
+              <strong>Date of Birth:</strong>{" "}
+              {new Date(biodata.dateOfBirth).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Age:</strong> {biodata.age} years
+            </p>
+            <p>
+              <strong>Height:</strong> {biodata.height} cm
+            </p>
+            <p>
+              <strong>Weight:</strong> {biodata.weight} kg
+            </p>
+            <p>
+              <strong>Occupation:</strong> {biodata.occupation}
+            </p>
+            <p>
+              <strong>Color:</strong> {biodata.race}
+            </p>
+            <p>
+              <strong>Religion:</strong> {biodata.religion}
+            </p>
+          </div>
           <div
             onClick={() => setIsFavourite(!isFavourite)}
-            className="btn-primary flex w-fit items-center gap-2 group"
+            className="btn-primary group flex w-fit items-center gap-2"
           >
             <strong>Add To Favourite</strong>
             <div
@@ -104,10 +104,8 @@ const BiodataDetails = () => {
       </div>
 
       {/* Additional Details */}
-      <div className="mt-8 rounded-lg bg-gray-50 p-6 shadow-inner">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800">
-          More Details
-        </h2>
+      <div className="card mt-8">
+        <h3 className="mb-4 text-center">More Details</h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <p>
             <strong>Father's Name:</strong> {biodata.fathersName}
@@ -132,10 +130,8 @@ const BiodataDetails = () => {
       </div>
 
       {/* Partner Preferences */}
-      <div className="mt-8 rounded-lg bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800">
-          Partner Preferences
-        </h2>
+      <div className="card mt-8">
+        <h3 className="mb-4 text-center">Partner Preferences</h3>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <p>
             <strong>Age:</strong> {biodata.expectedPartnerAge} years
@@ -150,10 +146,8 @@ const BiodataDetails = () => {
       </div>
 
       {/* Contact Information Section */}
-      <div className="mt-8 rounded-lg bg-gray-50 p-6 shadow-inner">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800">
-          Contact Information
-        </h2>
+      <div className="card mt-8">
+        <h3 className="mb-4 text-center">Contact Information</h3>
         {biodata.isPremium ? (
           showContact ? (
             <div className="space-y-2">
@@ -173,7 +167,7 @@ const BiodataDetails = () => {
             </button>
           )
         ) : (
-          <p className="text-gray-500">
+          <p>
             <div className="space-y-2">
               <p>
                 <strong>Contact Email:</strong> {biodata.contactEmail}
@@ -187,16 +181,14 @@ const BiodataDetails = () => {
       </div>
 
       {/* About Me */}
-      <div className="mt-8 rounded-lg bg-gray-50 p-6 shadow-inner">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800">About Me</h2>
-        <p className="mb-4 text-gray-700">{biodata.description}</p>
+      <div className="card mt-8">
+        <h3 className="mb-4 text-center">About Me</h3>
+        <p className="mb-4">{biodata.description}</p>
       </div>
 
       {/* Similar Biodatas Section */}
       <div className="mt-8">
-        <h2 className="mb-4 text-2xl font-semibold text-gray-800">
-          Similar Profiles
-        </h2>
+        <h3 className="mb-4 text-center">Similar Profiles</h3>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {similarBiodata.map((similarBio) => (
             <BioDataCard key={similarBio.biodataId} bio={similarBio} />

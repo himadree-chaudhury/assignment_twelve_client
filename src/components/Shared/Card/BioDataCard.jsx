@@ -3,16 +3,16 @@ import { Link } from "react-router";
 
 const BioDataCard = ({ bio: biodata }) => {
   return (
-    <div className="max-w-sm rounded-lg border border-gray-200 bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+    <div className="max-w-sm rounded-lg border border-gray-200 shadow-md transition-shadow duration-300 hover:shadow-lg">
       {/* Profile Image */}
       <img
-        className="h-48 w-full rounded-t-lg object-cover"
+        className="rounded-t-lg object-cover"
         src={biodata.profileImage || "https://via.placeholder.com/300x200"}
         alt={`${biodata.name}'s profile`}
       />
 
       {/* Card Body */}
-      <div className="p-5">
+      <div className="card">
         {/* Name and Premium Badge */}
         <div className="mb-2 flex items-center justify-between">
           <h3>{biodata.name}</h3>
@@ -43,7 +43,7 @@ const BioDataCard = ({ bio: biodata }) => {
         </ul>
 
         {/* Description */}
-        <p className="text-text-secondary mt-3 line-clamp-2 text-sm">
+        <p className="text-text-secondary dark:text-text-secondary-dark mt-3 line-clamp-2 text-sm">
           {biodata.description}
         </p>
 

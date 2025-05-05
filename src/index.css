@@ -79,7 +79,7 @@ body {
     @apply font-heading py-2 text-center text-[min(10vw,40px)] font-semibold;
   }
   h3 {
-    @apply font-heading text-[min(10vw,20px)] font-medium;
+    @apply font-heading text-[min(10vw,25px)] font-medium;
   }
   p {
     @apply text-text-secondary dark:text-text-secondary-dark text-[min(10vw,15px)] leading-tight;
@@ -139,7 +139,7 @@ body {
     @apply flex items-center gap-2 rounded-md bg-gray-100 px-4 py-2 transition-all hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600;
   }
   .card {
-    @apply overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800;
+    @apply overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800 p-5;
   }
   .pagination {
     @apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-gray-300 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700;
