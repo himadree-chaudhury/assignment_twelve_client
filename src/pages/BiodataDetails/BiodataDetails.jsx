@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";
 import BioDataCard from "../../components/Shared/Card/BioDataCard";
+import { GiSelfLove } from "react-icons/gi";
 
 const BiodataDetails = () => {
   const axiosSecure = useAxiosSecure();
@@ -11,53 +12,23 @@ const BiodataDetails = () => {
   const [isFavourite, setIsFavourite] = useState(false);
   const [showContact, setShowContact] = useState(false);
 
-  const { data: biodata, isLoading } = useQuery({
+  // *fetch data using query
+
+  const { data: { biodata, similarBiodata } = {}, isLoading } = useQuery({
     queryKey: ["bioDetails", id],
     queryFn: async () => {
       const { data } = await axiosSecure(`/biodata/${id}`);
-      return data;
+      return {
+        biodata: data.biodata || null,
+        similarBiodata: data.similarBiodata || null,
+      };
     },
+    enabled: !!id,
   });
 
-  console.log(biodata);
-
-  // Dummy data for similar biodatas (replace with API call in real implementation)
-  const similarBiodatas = [
-    {
-      biodataId: 2,
-      name: "Rahim Khan",
-      age: 34,
-      occupation: "Doctor",
-      height: 175,
-      presentDivision: "Dhaka",
-      religion: "Muslim",
-      profileImage: "https://example.com/images/rahim-profile.jpg",
-      description:
-        "Dedicated doctor with a caring nature, enjoys helping others...",
-    },
-    {
-      biodataId: 3,
-      name: "Sadia Islam",
-      age: 27,
-      occupation: "Teacher",
-      height: 158,
-      presentDivision: "Sylhet",
-      religion: "Muslim",
-      profileImage: "https://example.com/images/sadia-profile.jpg",
-      description: "A cheerful teacher who loves educating young minds...",
-    },
-    {
-      biodataId: 4,
-      name: "Arif Hossain",
-      age: 37,
-      occupation: "Businessman",
-      height: 170,
-      presentDivision: "Barisal",
-      religion: "Muslim",
-      profileImage: "https://example.com/images/arif-profile.jpg",
-      description: "Successful businessman with a love for adventure...",
-    },
-  ].slice(0, 3); // Limit to 3
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   if (isLoading) return <LoadingSpinner />;
   return (
@@ -109,28 +80,26 @@ const BiodataDetails = () => {
             <strong>Occupation:</strong> {biodata.occupation}
           </p>
           <p>
-            <strong>Race:</strong> {biodata.race}
+            <strong>Color:</strong> {biodata.race}
           </p>
           <p>
             <strong>Religion:</strong> {biodata.religion}
           </p>
-          <button
-            className={`rounded-full p-2 ${
-              isFavourite
-                ? "text-primary bg-fuchsia-200"
-                : "bg-text-secondary-dark text-text-secondary hover:bg-pink-200"
-            } transition-colors`}
+          <div
             onClick={() => setIsFavourite(!isFavourite)}
+            className="btn-primary flex w-fit items-center gap-2 group"
           >
-            <svg
-              className="h-6 w-6"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+            <strong>Add To Favourite</strong>
+            <div
+              className={`rounded-full p-2 ${
+                isFavourite
+                  ? "text-primary bg-fuchsia-200"
+                  : "bg-text-secondary-dark text-text-secondary group-hover:bg-pink-200"
+              } transition-colors`}
             >
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-          </button>
+              <GiSelfLove />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -229,8 +198,8 @@ const BiodataDetails = () => {
           Similar Profiles
         </h2>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {similarBiodatas.map((similarBiodata) => (
-            <BioDataCard key={similarBiodata.biodataId} bio={similarBiodata} />
+          {similarBiodata.map((similarBio) => (
+            <BioDataCard key={similarBio.biodataId} bio={similarBio} />
           ))}
         </div>
       </div>
