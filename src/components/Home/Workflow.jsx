@@ -1,4 +1,3 @@
-import React from "react";
 import Stepper, { Step } from "../Animation/Stepper/Stepper";
 import { useNavigate } from "react-router";
 

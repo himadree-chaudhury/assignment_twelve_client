@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";

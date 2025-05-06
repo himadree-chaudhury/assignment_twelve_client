@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import  { useContext, useState } from "react";
 import Title from "../Utilities/Title";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
@@ -240,16 +240,25 @@ const Navbar = () => {
           <Menu>
             <MenuButton>
               {/* User Profile Or Default Icon */}
-              <motion.div
-                className={`rounded-full p-2 ${
-                  isDark
-                    ? "bg-gray-700 hover:bg-gray-600"
-                    : "bg-gray-200 hover:bg-gray-300"
-                } transition-colors duration-300`}
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.1 }}
-              >
-                <FiUser className="text-accent" />
+              <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.1 }}>
+                {user?.photoURL ? (
+                  <img
+                    referrerPolicy="no-referrer"
+                    src={user?.photoURL}
+                    alt={user?.displayName}
+                    className="h-8 w-8 rounded-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className={`rounded-full p-2 ${
+                      isDark
+                        ? "bg-gray-700 hover:bg-gray-600"
+                        : "bg-gray-200 hover:bg-gray-300"
+                    } transition-colors duration-300`}
+                  >
+                    <FiUser className="text-accent" />
+                  </div>
+                )}
               </motion.div>
             </MenuButton>
             <MenuItems

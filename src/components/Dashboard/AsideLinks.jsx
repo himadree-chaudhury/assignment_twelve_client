@@ -9,7 +9,7 @@ const AsideLinks = ({ icon, text, alert, active, expanded }) => {
     >
       <span className={` ${expanded || "text-2xl"}`}> {icon}</span>
       <span
-        className={`overflow-hidden transition-all duration-200 ${
+        className={`w-58 overflow-hidden transition-all duration-200 ${
           expanded ? "ml-3" : "hidden w-0"
         }`}
       >

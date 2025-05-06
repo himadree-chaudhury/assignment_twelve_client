@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router"; // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import logo from "../../../assets/logo.png";
