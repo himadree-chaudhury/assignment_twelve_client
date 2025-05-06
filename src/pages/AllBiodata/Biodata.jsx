@@ -8,12 +8,16 @@ import BioDataCard from "../../components/Shared/Card/BioDataCard";
 import BioSkelton from "../../components/Shared/Card/Skelton/BioSkelton";
 import { useState } from "react";
 import Dropdown from "../../components/Form/Dropdown";
+import RangeInput from "../../components/Form/RangeInput";
 
 const Biodata = () => {
   const axiosPublic = useAxiosPublic();
 
   // *Sorting states
-  const [sortOption, setSortOption] = useState("younger");
+  const [genderSortOption, setGenderSortOption] = useState("all");
+  const [divisionSortOption, setDivisionSortOption] = useState("all");
+  const [ageRange, setAgeRange] = useState({ min: 18, max: 60 });
+  const [filterAge, setFilterAge] = useState(false);
 
   // *Pagination States
   const [currentPage, setCurrentPage] = useState(0);
@@ -22,15 +26,23 @@ const Biodata = () => {
   const itemsPerPage = 3;
 
   const { data, isLoading } = useQuery({
-    queryKey: ["biodata", currentPage],
+    queryKey: [
+      "biodata",
+      currentPage,
+      genderSortOption,
+      divisionSortOption,
+      filterAge,
+    ],
     queryFn: async () => {
       const { data } = await axiosPublic(
-        `/biodata?page=${currentPage + 1}&limit=${itemsPerPage}`,
+        `/biodata?page=${currentPage + 1}&limit=${itemsPerPage}&type=${genderSortOption}&division=${divisionSortOption}&minAge=${ageRange.min}&maxAge=${ageRange.max}`,
       );
       return {
         biodata: data.biodata || [],
         totalPageNumber: setTotalPages(data.totalPageNumber) || 0,
-        currentPageNumber: setTotalItems(data.currentPageNumber) || 0,
+        totalCount: setTotalItems(data.totalCount) || 0,
+        minAge: setAgeRange({ [0]: data.minAge }),
+        maxAge: setAgeRange({ [0]: data.maxAge }),
       };
     },
   });
@@ -64,20 +76,53 @@ const Biodata = () => {
   return (
     <div className="section-layout">
       <title>Biodata | Pathway</title>
-      <div className="flex-centric justify-between">
+      <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
         <PageHeading
           heading={"Available Biodata"}
           text={"Choose Your Perfect Partner"}
         />
-        <div className="flex justify-end">
+        <div className="mb-2 grid grid-cols-2 justify-items-end gap-2 md:grid-cols-4">
           <Dropdown
             sortOptions={[
-              { value: "younger", label: "Younger First" },
-              { value: "older", label: "Older First" },
+              { value: "all", label: "Type" },
+              { value: "male", label: "Male" },
+              { value: "female", label: "Female" },
             ]}
-            sortOption={sortOption}
-            setSortOption={setSortOption}
+            sortOption={genderSortOption}
+            setSortOption={setGenderSortOption}
           />
+          <Dropdown
+            sortOptions={[
+              { value: "all", label: "Division" },
+              { value: "dha", label: "Dhaka" },
+              { value: "cha", label: "Chattagram" },
+              { value: "ran", label: "Rangpur" },
+              { value: "bar", label: "Barisal" },
+              { value: "khu", label: "Khulna" },
+              { value: "mym", label: "Mymensingh" },
+              { value: "syl", label: "Sylhet" },
+            ]}
+            sortOption={divisionSortOption}
+            setSortOption={setDivisionSortOption}
+          />
+          <div className="mt-5 ml-2 md:mt-0 md:ml-0">
+            <RangeInput
+              label="Age Range"
+              min={18}
+              max={60}
+              step={1}
+              defaultMin={18}
+              defaultMax={60}
+              onChange={(range) => setAgeRange(range)}
+            />
+          </div>
+
+          <button
+            onClick={() => setFilterAge(!filterAge)}
+            className="btn-secondary mt-5 ml-2 h-fit w-fit md:mt-0 md:ml-0"
+          >
+            Filter Age
+          </button>
         </div>
       </div>
       {/* Results Count */}
@@ -87,7 +132,7 @@ const Biodata = () => {
           {totalItems > 0 && (
             <span>
               (Showing {currentPage * itemsPerPage + 1}-
-              {Math.min((currentPage + 1) * itemsPerPage)})
+              {Math.min((currentPage + 1) * itemsPerPage, totalItems)})
             </span>
           )}
         </p>
