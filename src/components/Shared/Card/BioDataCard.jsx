@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const BioDataCard = ({ bio: biodata }) => {
   return (
-    <div className="max-w-sm rounded-lg border border-gray-200 shadow-md transition-shadow duration-300 hover:shadow-lg">
+    <div className="flex max-w-sm flex-col rounded-lg border border-gray-200 shadow-md transition-shadow duration-300 hover:shadow-lg">
       {/* Profile Image */}
       <img
         className="rounded-t-lg object-cover"
@@ -12,7 +12,7 @@ const BioDataCard = ({ bio: biodata }) => {
       />
 
       {/* Card Body */}
-      <div className="card">
+      <div className="card grow">
         {/* Name and Premium Badge */}
         <div className="mb-2 flex items-center justify-between">
           <h3>{biodata.name}</h3>

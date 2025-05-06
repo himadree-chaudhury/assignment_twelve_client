@@ -1,25 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import Banner from "../../components/Home/Banner";
 import Heading from "../../components/Shared/Utilities/Heading";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import BioSkelton from "../../components/Shared/Card/Skelton/BioSkelton";
-import BioDataCard from "../../components/Shared/Card/BioDataCard";
-import Dropdown from "../../components/Form/Dropdown";
-import { useState } from "react";
+import SuccessCounter from "../../components/Home/SuccessCounter";
+import PremiumMembers from "../../components/Home/PremiumMembers";
+import SuccessStory from "../../components/Home/SuccessStory";
 
 const Home = () => {
-  const axiosPublic = useAxiosPublic();
-  const [sortOption, setSortOption] = useState("younger");
-  
-  console.log(sortOption);
-  const { data: premium, isLoading } = useQuery({
-    queryKey: ["premium", sortOption],
-    queryFn: async () => {
-      const { data } = await axiosPublic(`/premium?sort=${sortOption}`);
-      return data;
-    },
-  });
-
   return (
     <div>
       {/* Header section */}
@@ -37,34 +22,8 @@ const Home = () => {
           }
         />
         {/* members card */}
-        <div className="section-layout flex flex-col items-end gap-5">
-          <Dropdown
-            sortOptions={[
-              { value: "younger", label: "Younger First" },
-              { value: "older", label: "Older First" },
-            ]}
-            sortOption={sortOption}
-            setSortOption={setSortOption}
-          />
-          {isLoading ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {Array(6)
-                .fill(0)
-                .map((_, index) => (
-                  <BioSkelton key={index} />
-                ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {premium.map((bio) => (
-                <div key={bio._id}>
-                  <BioDataCard bio={bio} />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {/* <div>{premium.length}</div> */}
+        <PremiumMembers />
+
         {/* Section : work flow */}
         <Heading
           title={"HOW IT WORKS"}
@@ -81,6 +40,9 @@ const Home = () => {
             "Celebrate with us! See how many couples have found love through Pathway, with new stories added every day"
           }
         />
+        {/* counters */}
+        <SuccessCounter />
+
         {/* Section : success stories */}
         <Heading
           title={"STORIES"}
@@ -89,6 +51,8 @@ const Home = () => {
             "Be inspired by couples who found their forever through Pathway. Explore their journeys, sorted by marriage date, and start writing your own story"
           }
         />
+        {/* stories */}
+        <SuccessStory/>
       </div>
     </div>
   );
