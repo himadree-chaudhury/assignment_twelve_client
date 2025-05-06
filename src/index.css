@@ -139,7 +139,7 @@ body {
     @apply flex items-center gap-2 rounded-md bg-gray-100 px-4 py-2 transition-all hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600;
   }
   .card {
-    @apply overflow-hidden rounded-lg bg-white shadow-md dark:bg-gray-800 p-5;
+    @apply overflow-hidden rounded-lg bg-white p-5 shadow-md dark:bg-gray-800;
   }
   .pagination {
     @apply flex h-8 w-8 cursor-pointer items-center justify-center rounded-md border border-gray-300 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700;

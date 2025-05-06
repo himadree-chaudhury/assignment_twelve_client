@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";
 import PageHeading from "../../components/Shared/Utilities/PageHeading";
 import BioDataCard from "../../components/Shared/Card/BioDataCard";
+import BioSkelton from "../../components/Shared/Card/Skelton/BioSkelton";
 
 const Biodata = () => {
   const axiosPublic = useAxiosPublic();
@@ -15,7 +15,25 @@ const Biodata = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner />;
+if (isLoading) {
+  return (
+    <div className="section-layout">
+      <div>
+        <PageHeading
+          heading={"Available Biodata"}
+          text={"Choose Your Perfect Partner"}
+        />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array(20)
+            .fill(0)
+            .map((_, index) => (
+              <BioSkelton key={index} />
+            ))}
+        </div>
+      </div>
+    </div>
+  );
+}
   return (
     <div className="section-layout">
       <title>Biodata | Pathway</title>
