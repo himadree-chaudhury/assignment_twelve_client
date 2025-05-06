@@ -3,6 +3,7 @@ import Heading from "../../components/Shared/Utilities/Heading";
 import SuccessCounter from "../../components/Home/SuccessCounter";
 import PremiumMembers from "../../components/Home/PremiumMembers";
 import SuccessStory from "../../components/Home/SuccessStory";
+import Workflow from "../../components/Home/Workflow";
 
 const Home = () => {
   return (
@@ -32,6 +33,9 @@ const Home = () => {
             "Pathway makes finding your life partner easy. Create your biodata, explore matches, and connect with your perfect partner - all in just a few clicks"
           }
         />
+        {/* steps */}
+        <Workflow />
+
         {/* Section : success counter */}
         <Heading
           title={"SUCCESS COUNTER"}
@@ -52,7 +56,7 @@ const Home = () => {
           }
         />
         {/* stories */}
-        <SuccessStory/>
+        <SuccessStory />
       </div>
     </div>
   );
