@@ -15,6 +15,7 @@ import {
   FiDatabase,
 } from "react-icons/fi";
 import LoadingSpinner from "../../../components/Shared/Utilities/LoadingSpinner";
+import DashboardSkeleton from "../Common/DashboardSkeleton";
 
 const ViewBiodata = () => {
   const { user } = useAuth();
@@ -60,16 +61,10 @@ const ViewBiodata = () => {
     mutation.mutate();
   };
 
-  if (isLoading)
-    return (
-      <div className="py-10 text-center">
-        <LoadingSpinner />
-      </div>
-    );
-
+  if (isLoading) return <DashboardSkeleton/>;
 
   return (
-    <div className="aside-layout border">
+    <div className="aside-layout">
       <title>View Biodata | Pathway</title>
       <PageHeading
         heading={"View Biodata"}
@@ -233,7 +228,7 @@ const ViewBiodata = () => {
             </div>
           </div>
         ) : (
-          <div className="py-10 text-center">No biodata found.</div>
+          <div className="py-10 text-center">You haven't upload your biodata yet.</div>
         )}
       </div>
     </div>

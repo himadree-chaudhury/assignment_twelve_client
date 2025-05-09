@@ -1,4 +1,4 @@
-import  { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -66,6 +66,15 @@ export const AuthProvider = ({ children }) => {
           await axios.post(
             `${import.meta.env.VITE_API_URL}/jwt`,
             {
+              email: currentUser.email,
+            },
+            { withCredentials: true },
+          );
+          await axios.post(
+            `${import.meta.env.VITE_API_URL}/user/${user?.email}`,
+            {
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
               email: currentUser.email,
             },
             { withCredentials: true },

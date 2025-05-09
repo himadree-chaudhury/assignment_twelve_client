@@ -19,8 +19,8 @@ import ApprovePremiums from "../pages/Dashboard/Admin/ApprovePremiums";
 import ApproveContacts from "../pages/Dashboard/Admin/ApproveContacts";
 import ApproveStories from "../pages/Dashboard/Admin/ApproveStories";
 import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
-import Profile from "../pages/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
+import UserProfile from "../pages/Dashboard/Common/UserProfile";
 
 const route = createBrowserRouter([
   {
@@ -116,7 +116,7 @@ const route = createBrowserRouter([
       },
       {
         path: "profile",
-        Component: Profile,
+        Component: UserProfile,
       },
     ],
   },

@@ -57,8 +57,8 @@ const Aside = () => {
   };
 
   return (
-    <aside className="min-h-screen bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
-      <nav className="flex h-full flex-col p-3 shadow-sm">
+    <aside className="h-full bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
+      <nav className="flex h-full flex-col p-3 shadow-sm ">
         {/* title & collapse button */}
         <div className="flex-centric">
           <div
@@ -80,7 +80,7 @@ const Aside = () => {
         </div>
         <hr className="bg-primary my-2 h-0.5 border-t-0" />
 
-        <div className="flex flex-col h-full">
+        <div className="flex h-screen flex-col gap-20">
           {/* Navigation links */}
           <div className="grow">
             {/* common route */}
@@ -259,7 +259,7 @@ const Aside = () => {
 
               <div
                 className={`flex-centric gap-1 overflow-hidden transition-all duration-200 ${
-                  expanded ? "ml-1" : "w-0"
+                  expanded ? "ml-1" : "hidden w-0"
                 }`}
               >
                 {/* profile details */}
