@@ -1,6 +1,13 @@
-const AsideLinks = ({ icon, text, alert, active, expanded }) => {
+const AsideLinks = ({ icon, text, alert, active, expanded, setExpanded }) => {
+  const handleMenuCollapseOnNavigationClick = () => {
+    if (window.innerWidth < 768) {
+      setExpanded(false);
+      console.log(expanded);
+    }
+  };
   return (
     <div
+      onClick={handleMenuCollapseOnNavigationClick}
       className={`group font-button relative my-1 flex cursor-pointer items-center rounded-md px-3 py-2 text-lg transition-colors duration-200 ${
         active
           ? "from-accent to-secondary bg-gradient-to-tr font-semibold text-white"
@@ -9,7 +16,7 @@ const AsideLinks = ({ icon, text, alert, active, expanded }) => {
     >
       <span className={` ${expanded || "text-2xl"}`}> {icon}</span>
       <span
-        className={`w-58 overflow-hidden transition-all duration-200 ${
+        className={`w-60 overflow-hidden transition-all duration-200 ${
           expanded ? "ml-3" : "hidden w-0"
         }`}
       >

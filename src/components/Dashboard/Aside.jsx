@@ -29,7 +29,7 @@ import toast from "react-hot-toast";
 
 const Aside = () => {
   const [isDark] = useContext(ThemeContext);
-  const { logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const [expanded, setExpanded] = useState(true);
   const navigate = useNavigate();
 
@@ -57,7 +57,7 @@ const Aside = () => {
   };
 
   return (
-    <aside className="h-screen bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
+    <aside className="min-h-screen bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
       <nav className="flex h-full flex-col p-3 shadow-sm">
         {/* title & collapse button */}
         <div className="flex-centric">
@@ -80,7 +80,7 @@ const Aside = () => {
         </div>
         <hr className="bg-primary my-2 h-0.5 border-t-0" />
 
-        <div className="flex h-screen flex-col">
+        <div className="flex flex-col h-full">
           {/* Navigation links */}
           <div className="grow">
             {/* common route */}
@@ -90,6 +90,7 @@ const Aside = () => {
                   icon={<FiAlignLeft />}
                   text={"Dashboard"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -102,6 +103,7 @@ const Aside = () => {
                   icon={<FiEdit />}
                   text={"Edit Biodata"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                   alert={alert}
                 />
@@ -114,6 +116,7 @@ const Aside = () => {
                   icon={<FiPrinter />}
                   text={"View Biodata"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -125,6 +128,7 @@ const Aside = () => {
                   icon={<FiPhoneCall />}
                   text={"My Contact Request"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -136,6 +140,7 @@ const Aside = () => {
                   icon={<FiFileText />}
                   text={"My Favourite Biodata"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -147,6 +152,7 @@ const Aside = () => {
                   icon={<GiGlobeRing />}
                   text={"Got Married"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -159,6 +165,7 @@ const Aside = () => {
                   icon={<FiUsers />}
                   text={"Manage Users"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -170,6 +177,7 @@ const Aside = () => {
                   icon={<FiUserCheck />}
                   text={"Approved Premium"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -181,6 +189,7 @@ const Aside = () => {
                   icon={<FiKey />}
                   text={"Approved Contact Request"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -192,6 +201,7 @@ const Aside = () => {
                   icon={<FiFilePlus />}
                   text={"Success Story"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
@@ -204,58 +214,72 @@ const Aside = () => {
                   icon={<FiHome />}
                   text={"Return To Home"}
                   expanded={expanded}
+                  setExpanded={setExpanded}
                   active={isActive}
                 />
               )}
             </NavLink>
           </div>
-          {/* Dark mode toggling */}
-          <div className="flex-centric justify-start">
-            {/* toggling button */}
-            <div className="ml-2">
-              <ThemeToggle />
-            </div>
-            {/* mood details */}
-            <div
-              className={`flex-centric gap-2 overflow-hidden py-2 transition-all duration-200 ${expanded ? "ml-5" : "w-0"}`}
-            >
-              <h3>{isDark ? "Light Mood" : "Night Mood"}</h3>
-              <div className="flex-centric text-2xl">
-                {isDark ? <FiSun /> : <FiMoon />}
+          <div className="">
+            {/* Dark mode toggling */}
+            <div className="flex-centric justify-start">
+              {/* toggling button */}
+              <div className="ml-2">
+                <ThemeToggle />
+              </div>
+              {/* mood details */}
+              <div
+                className={`flex-centric gap-2 overflow-hidden py-2 transition-all duration-200 ${expanded ? "ml-5" : "w-0"}`}
+              >
+                <h3>{isDark ? "Light Mood" : "Night Mood"}</h3>
+                <div className="flex-centric text-2xl">
+                  {isDark ? <FiSun /> : <FiMoon />}
+                </div>
               </div>
             </div>
-          </div>
-          <hr className="bg-primary my-2 h-0.5 border-t-0" />
-          {/* Profile & logout */}
-          <div className="flex-centric justify-start">
-            <Link to="/dashboard/profile">
-              <div className="rounded-full bg-gray-300 p-3">
-                <FiUser className="text-accent text-2xl" />
-              </div>
-            </Link>
+            <hr className="bg-primary my-2 h-0.5 border-t-0" />
+            {/* Profile & logout */}
+            <div className="flex-centric justify-start">
+              <Link to="/dashboard/profile">
+                <div>
+                  {user?.email ? (
+                    <img
+                      referrerPolicy="no-referrer"
+                      src={user?.photoURL}
+                      alt={user?.displayName}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="rounded-full bg-gray-300 p-3">
+                      <FiUser className="text-accent text-2xl" />
+                    </div>
+                  )}
+                </div>
+              </Link>
 
-            <div
-              className={`flex-centric overflow-hidden transition-all duration-200 ${
-                expanded ? "ml-3" : "w-0"
-              }`}
-            >
-              {/* profile details */}
-              <div>
-                <h3>John Doe</h3>
-                <span>john@email.com</span>
+              <div
+                className={`flex-centric gap-1 overflow-hidden transition-all duration-200 ${
+                  expanded ? "ml-1" : "w-0"
+                }`}
+              >
+                {/* profile details */}
+                <div>
+                  <h3 className="w-36">{user?.displayName}</h3>
+                  <span>{user?.email}</span>
+                </div>
+                {/* logout button */}
+                <a data-tooltip-id="logout" data-tooltip-content="Logout">
+                  <button
+                    onClick={handleLogout}
+                    className={`border-primary bg-accent hover:bg-primary rounded-full border-2 p-2 text-2xl text-white transition-all duration-200 ${
+                      expanded && "ml-0"
+                    }`}
+                  >
+                    <FiLogOut />
+                  </button>
+                </a>
+                <Tooltip id="logout" />
               </div>
-              {/* logout button */}
-              <a data-tooltip-id="logout" data-tooltip-content="Logout">
-                <button
-                  onClick={handleLogout}
-                  className={`border-primary bg-accent hover:bg-primary rounded-full border-2 p-2 text-2xl text-white transition-all duration-200 ${
-                    expanded && "ml-5"
-                  }`}
-                >
-                  <FiLogOut />
-                </button>
-              </a>
-              <Tooltip id="logout" />
             </div>
           </div>
         </div>
