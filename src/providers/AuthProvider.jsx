@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
             { withCredentials: true },
           );
           await axios.post(
-            `${import.meta.env.VITE_API_URL}/user/${user?.email}`,
+            `${import.meta.env.VITE_API_URL}/user/${currentUser?.email}`,
             {
               displayName: currentUser.displayName,
               photoURL: currentUser.photoURL,

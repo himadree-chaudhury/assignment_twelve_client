@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useParams } from "react-router";
 import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";
 import BioDataCard from "../../components/Shared/Card/BioDataCard";
 import { GiSelfLove } from "react-icons/gi";
+import toast from "react-hot-toast";
 
 const BiodataDetails = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const [isFavourite, setIsFavourite] = useState(false);
-  const [showContact, setShowContact] = useState(false);
+  // const [showContact, setShowContact] = useState(false);
+  const [contactRequest, setContactRequest] = useState(false);
 
   // *fetch data using query
 
@@ -25,6 +27,28 @@ const BiodataDetails = () => {
     },
     enabled: !!id,
   });
+
+  // *handle add biodata to favourite list
+  const handleFavourite = async () => {
+    try {
+      await axiosSecure.post(`/add-favourite/${biodata?.biodataId}`);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setIsFavourite(true);
+    }
+  };
+
+  // *handle premium contact request
+  const handlePremiumContactRequest = async () => {
+    try {
+      await axiosSecure.post(`/contact-request/${biodata?.biodataId}`);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      setContactRequest(true);
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -85,12 +109,15 @@ const BiodataDetails = () => {
               <strong>Religion:</strong> {biodata.religion}
             </p>
           </div>
-          <div
-            onClick={() => setIsFavourite(!isFavourite)}
+          <button
+            disabled={isFavourite}
+            onClick={() => handleFavourite()}
             className="btn-primary group flex w-fit items-center gap-2"
           >
-            <strong>Add To Favourite</strong>
-            <div
+            <strong>
+              {isFavourite ? "Added To Favorite" : "Add To Favourite"}
+            </strong>
+            <span
               className={`rounded-full p-2 ${
                 isFavourite
                   ? "text-primary bg-fuchsia-200"
@@ -98,8 +125,8 @@ const BiodataDetails = () => {
               } transition-colors`}
             >
               <GiSelfLove />
-            </div>
-          </div>
+            </span>
+          </button>
         </div>
       </div>
 
@@ -149,34 +176,24 @@ const BiodataDetails = () => {
       <div className="card mt-8">
         <h3 className="mb-4 text-center">Contact Information</h3>
         {biodata.isPremium ? (
-          showContact ? (
-            <div className="space-y-2">
-              <p>
-                <strong>Contact Email:</strong> {biodata.contactEmail}
-              </p>
-              <p>
-                <strong>Mobile Number:</strong> {biodata.mobileNumber}
-              </p>
-            </div>
-          ) : (
-            <button
-              className="btn-primary"
-              onClick={() => setShowContact(true)}
-            >
-              Request Contact Information
-            </button>
-          )
+          <button
+            className="btn-primary"
+            disabled={contactRequest}
+            onClick={() => handlePremiumContactRequest()}
+          >
+            {contactRequest
+              ? "Contact Information Requested"
+              : "Request Contact Information"}
+          </button>
         ) : (
-          <p>
-            <div className="space-y-2">
-              <p>
-                <strong>Contact Email:</strong> {biodata.contactEmail}
-              </p>
-              <p>
-                <strong>Mobile Number:</strong> {biodata.mobileNumber}
-              </p>
-            </div>
-          </p>
+          <div className="space-y-2">
+            <p>
+              <strong>Contact Email:</strong> {biodata.contactEmail}
+            </p>
+            <p>
+              <strong>Mobile Number:</strong> {biodata.mobileNumber}
+            </p>
+          </div>
         )}
       </div>
 
