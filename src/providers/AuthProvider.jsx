@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import app from "../firebase/firebase.config";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AuthContext = createContext();
 export { AuthContext };
@@ -22,6 +23,7 @@ const googleProvider = new GoogleAuthProvider();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [dbUser, setDBUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // *Create User With Email And Password
@@ -88,7 +90,12 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       } finally {
+        const { data } = await axios(
+          `${import.meta.env.VITE_API_URL}/user-info/${currentUser?.email}`,
+        );
+        setDBUser(data);
         setLoading(false);
+        // console.log(data);
       }
     });
     return () => unsubscribe();
@@ -96,6 +103,7 @@ export const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    dbUser,
     loading,
     setLoading,
     createUser,

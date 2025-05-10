@@ -6,8 +6,10 @@ import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";
 import BioDataCard from "../../components/Shared/Card/BioDataCard";
 import { GiSelfLove } from "react-icons/gi";
 import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 const BiodataDetails = () => {
+  const { dbUser } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const [isFavourite, setIsFavourite] = useState(false);
@@ -27,6 +29,18 @@ const BiodataDetails = () => {
     },
     enabled: !!id,
   });
+
+  // *match user favourite & contact list data with biodata
+  useEffect(() => {
+    if (biodata && dbUser) {
+      setIsFavourite(
+        dbUser.favouriteIDs.includes(biodata.biodataId.toString()),
+      );
+      setContactRequest(
+        dbUser.requestedContactIDs.includes(biodata.biodataId.toString()),
+      );
+    }
+  }, [biodata, dbUser]);
 
   // *handle add biodata to favourite list
   const handleFavourite = async () => {

@@ -8,7 +8,8 @@ import { imageUpload } from "../../../api/imageUpload";
 import cover from "../../../assets/banner4.jpg";
 
 const UserProfile = () => {
-  const { user, updateUserProfile } = useAuth();
+  const { dbUser: user, updateUserProfile } = useAuth();
+  console.log(user);
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
