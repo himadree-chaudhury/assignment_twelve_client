@@ -6,7 +6,7 @@ const Dashboard = () => {
     <div>
       <div className="bg-background-light dark:bg-background-dark dark:text-text-primary-dark selection:bg-primary overflow-hidden transition-all duration-200 selection:text-white">
         {/* Main Content Container */}
-        <div className="flex max-w-screen-2xl mx-auto border">
+        <div className="mx-auto flex max-w-screen-2xl border">
           {/* Side Navigation */}
           <div className="">
             <Aside />

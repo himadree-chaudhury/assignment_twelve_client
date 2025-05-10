@@ -610,36 +610,34 @@ const EditBiodata = () => {
             </motion.div>
           </div>
 
-            {/* Description section */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              <div className="rounded-lg p-4">
-                <h3 className="text-accent-hover mb-3 flex items-center text-lg font-semibold">
-                  <FiFileText className="mr-2" /> Description
-                </h3>
+          {/* Description section */}
+          <motion.div variants={itemVariants} className="space-y-6">
+            <div className="rounded-lg p-4">
+              <h3 className="text-accent-hover mb-3 flex items-center text-lg font-semibold">
+                <FiFileText className="mr-2" /> Description
+              </h3>
 
-                {/* description input */}
-                <div>
-                  <label htmlFor="description">Personal Description </label>
-                  <textarea
-                    id="description"
-                    {...register("description")}
-                    className={`border px-4 py-2 ${
-                      errors.description && "border-error focus:ring-error"
-                    } `}
-                    rows={4}
-                    placeholder="e.g. I am a passionate software engineer who loves coding and exploring new technologies. Seeking a kind-hearted partner who values family and growth."
-                  />
-                  {errors.description && (
-                    <p className="error-massage">
-                      {errors.description.message}
-                    </p>
-                  )}
-                </div>
+              {/* description input */}
+              <div>
+                <label htmlFor="description">Personal Description </label>
+                <textarea
+                  id="description"
+                  {...register("description")}
+                  className={`border px-4 py-2 ${
+                    errors.description && "border-error focus:ring-error"
+                  } `}
+                  rows={4}
+                  placeholder="e.g. I am a passionate software engineer who loves coding and exploring new technologies. Seeking a kind-hearted partner who values family and growth."
+                />
+                {errors.description && (
+                  <p className="error-massage">{errors.description.message}</p>
+                )}
               </div>
-            </motion.div>
+            </div>
+          </motion.div>
 
           {/* Submit Button */}
-          <motion.div variants={itemVariants} className="mt-8 flex-centric">
+          <motion.div variants={itemVariants} className="flex-centric mt-8">
             <motion.button
               type="submit"
               whileHover={{ scale: 1.02 }}

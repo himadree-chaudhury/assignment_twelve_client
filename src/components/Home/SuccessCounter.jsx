@@ -21,11 +21,11 @@ const SuccessCounter = () => {
     },
   });
 
-  if (isLoading) return <LoadingSpinner/>;
+  if (isLoading) return <LoadingSpinner />;
 
   const { totalBiodata, totalGirls, totalBoys, totalMarriage } =
     statsData || {};
-  
+
   // *Card stats
   const stats = [
     { label: "Total Biodata", value: totalBiodata },

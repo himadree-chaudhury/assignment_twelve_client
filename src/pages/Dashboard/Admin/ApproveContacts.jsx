@@ -19,10 +19,6 @@ const ApproveContacts = () => {
     },
   });
 
-  if (contactRequests) {
-    console.log(contactRequests.length);
-  }
-
   return (
     <div className="aside-layout">
       <title>Approved Contact Requests | Pathway</title>

@@ -11,7 +11,6 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import app from "../firebase/firebase.config";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AuthContext = createContext();
 export { AuthContext };

@@ -1,6 +1,5 @@
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 
-
 const GotMarried = () => {
   return (
     <div className="aside-layout">

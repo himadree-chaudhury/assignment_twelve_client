@@ -53,7 +53,7 @@ export default function Stepper({
 
   return (
     <div
-          className="flex min-h-full flex-1 flex-col items-center justify-center p-4 sm:aspect-[4/3] md:aspect-[2/1]"
+      className="flex min-h-full flex-1 flex-col items-center justify-center p-4 sm:aspect-[4/3] md:aspect-[2/1]"
       {...rest}
     >
       <div
@@ -275,7 +275,7 @@ function StepConnector({ isComplete }) {
   };
 
   return (
-    <div className="relative mx-2 h-0.5 flex-1 overflow-hidden rounded bg-text-secondary">
+    <div className="bg-text-secondary relative mx-2 h-0.5 flex-1 overflow-hidden rounded">
       <motion.div
         className="absolute top-0 left-0 h-full"
         variants={lineVariants}

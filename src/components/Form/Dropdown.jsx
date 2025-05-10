@@ -18,7 +18,7 @@ const Dropdown = ({ sortOptions, sortOption, setSortOption }) => {
           {sortOptions.find((opt) => opt.value === sortOption)?.label}
         </span>
         <FiChevronDown
-          className={`transition-transform  ${showSortDropdown ? "rotate-180" : ""}`}
+          className={`transition-transform ${showSortDropdown ? "rotate-180" : ""}`}
         />
       </motion.button>
 

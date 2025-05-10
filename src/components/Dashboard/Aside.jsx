@@ -58,7 +58,7 @@ const Aside = () => {
 
   return (
     <aside className="h-full bg-gradient-to-br from-rose-200 to-pink-400 dark:text-black">
-      <nav className="flex h-full flex-col p-3 shadow-sm ">
+      <nav className="flex h-full flex-col p-3 shadow-sm">
         {/* title & collapse button */}
         <div className="flex-centric">
           <div

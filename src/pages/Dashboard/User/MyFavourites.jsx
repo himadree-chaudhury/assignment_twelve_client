@@ -1,9 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { AnimatePresence, motion } from "framer-motion";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
-import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import toast from "react-hot-toast";
 import { FiEdit, FiPlus, FiTrash2, FiX } from "react-icons/fi";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
 import { useQuery } from "@tanstack/react-query";
@@ -25,7 +23,6 @@ const MyFavourites = () => {
       return data;
     },
   });
-  
 
   // *Handle Delete Action
   // const handleDelete = async (id) => {
@@ -41,7 +38,7 @@ const MyFavourites = () => {
   // };
 
   return (
-    <div className="aside-layout ">
+    <div className="aside-layout">
       <title>My Favourite Biodata | Pathway</title>
       <PageHeading
         heading={"My Favourite Biodata"}

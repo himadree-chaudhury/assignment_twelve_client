@@ -61,7 +61,7 @@ const ViewBiodata = () => {
     mutation.mutate();
   };
 
-  if (isLoading) return <DashboardSkeleton/>;
+  if (isLoading) return <DashboardSkeleton />;
 
   return (
     <div className="aside-layout">
@@ -228,7 +228,9 @@ const ViewBiodata = () => {
             </div>
           </div>
         ) : (
-          <div className="py-10 text-center">You haven't upload your biodata yet.</div>
+          <div className="py-10 text-center">
+            You haven't upload your biodata yet.
+          </div>
         )}
       </div>
     </div>
