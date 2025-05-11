@@ -98,7 +98,7 @@ body {
     @apply font-heading text-[min(10vw,25px)] font-medium;
   }
   p {
-    @apply text-text-secondary dark:text-text-secondary-dark text-[min(10vw,15px)] leading-tight;
+    @apply text-text-secondary dark:text-text-secondary-dark text-[min(10vw,15px)] leading-relaxed;
   }
   button {
     @apply cursor-pointer;
