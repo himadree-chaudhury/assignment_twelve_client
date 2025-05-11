@@ -94,7 +94,7 @@ const EditBiodata = () => {
   return (
     <div className="">
       <title>Edit Biodata | Pathway</title>
-      <div className="aside-layout">
+      <div className="">
         <PageHeading
           heading={"Edit Biodata"}
           text={"Update your profile to find the perfect match"}

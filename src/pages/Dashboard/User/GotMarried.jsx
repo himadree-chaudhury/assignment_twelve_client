@@ -96,7 +96,7 @@ const GotMarried = () => {
   return (
     <div className="">
       <title>Got Married | Pathway</title>
-      <div className="aside-layout">
+      <div className="">
         <PageHeading
           heading={"Celebrate Your Marriage"}
           text={"Share your success story with the Pathway community"}

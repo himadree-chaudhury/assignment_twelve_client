@@ -24,7 +24,7 @@ const ApproveStories = () => {
     },
   });
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>Success Story | Pathway</title>
       <PageHeading
         heading={"Success Story"}

@@ -62,7 +62,7 @@ const ViewBiodata = () => {
   };
 
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>View Biodata | Pathway</title>
       <PageHeading
         heading={"View Biodata"}

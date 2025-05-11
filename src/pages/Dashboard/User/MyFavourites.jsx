@@ -38,7 +38,7 @@ const MyFavourites = () => {
   // };
 
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>My Favourite Biodata | Pathway</title>
       <PageHeading
         heading={"My Favourite Biodata"}

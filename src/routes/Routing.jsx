@@ -26,7 +26,7 @@ const route = createBrowserRouter([
   {
     path: "/",
     Component: Root,
-    errorElement: Error,
+    errorElement: <Error />,
     children: [
       {
         index: true,
@@ -65,58 +65,106 @@ const route = createBrowserRouter([
   {
     path: "/dashboard",
     Component: Dashboard,
-    errorElement: Error,
+    errorElement: <Error />,
     children: [
+      // Remove duplicate index route and use a single entry point
       {
         index: true,
-        Component: Statistics,
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
       },
-      // *Normal user routes
+      {
+        path: "statistics",
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
+      },
+      // Normal user routes
       {
         path: "edit-biodata",
-        Component: EditBiodata,
+        element: (
+          <PrivateRoute>
+            <EditBiodata />
+          </PrivateRoute>
+        ),
       },
       {
         path: "view-biodata",
-        Component: ViewBiodata,
+        element: (
+          <PrivateRoute>
+            <ViewBiodata />
+          </PrivateRoute>
+        ),
       },
       {
         path: "contact-request",
-        Component: MyRequests,
+        element: (
+          <PrivateRoute>
+            <MyRequests />
+          </PrivateRoute>
+        ),
       },
       {
         path: "favourite-biodata",
-        Component: MyFavourites,
+        element: (
+          <PrivateRoute>
+            <MyFavourites />
+          </PrivateRoute>
+        ),
       },
       {
         path: "got-married",
-        Component: GotMarried,
+        element: (
+          <PrivateRoute>
+            <GotMarried />
+          </PrivateRoute>
+        ),
       },
-      // *Admin special routes
+      // Admin special routes
       {
         path: "manage-users",
-        Component: ManageUsers,
+        element: (
+          <PrivateRoute>
+            <ManageUsers />
+          </PrivateRoute>
+        ),
       },
       {
         path: "approved-premium",
-        Component: ApprovePremiums,
+        element: (
+          <PrivateRoute>
+            <ApprovePremiums />
+          </PrivateRoute>
+        ),
       },
       {
         path: "approved-contact-request",
-        Component: ApproveContacts,
+        element: (
+          <PrivateRoute>
+            <ApproveContacts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "success-story",
-        Component: ApproveStories,
-      },
-      // *Common route
-      {
-        path: "statistics",
-        Component: Statistics,
+        element: (
+          <PrivateRoute>
+            <ApproveStories />
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
-        Component: UserProfile,
+        element: (
+          <PrivateRoute>
+            <UserProfile />
+          </PrivateRoute>
+        ),
       },
     ],
   },

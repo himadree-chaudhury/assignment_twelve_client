@@ -57,7 +57,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>User Profile | Pathway</title>
       <div className="relative">
         {/* Cover Image */}

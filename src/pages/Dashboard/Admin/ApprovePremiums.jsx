@@ -2,7 +2,7 @@ import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 
 const ApprovePremiums = () => {
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>Approved Premium Members | Pathway</title>
       <PageHeading
         heading={"Approved Premium Members"}

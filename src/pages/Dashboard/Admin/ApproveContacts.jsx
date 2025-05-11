@@ -20,7 +20,7 @@ const ApproveContacts = () => {
   });
 
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>Approved Contact Requests | Pathway</title>
       <PageHeading
         heading={"Approved Contact Requests"}

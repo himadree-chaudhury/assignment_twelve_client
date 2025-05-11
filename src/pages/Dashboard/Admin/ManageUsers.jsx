@@ -18,7 +18,7 @@ const ManageUsers = () => {
   });
 
   return (
-    <div className="aside-layout">
+    <div className="">
       <title>Manage Users | Pathway</title>
       <PageHeading
         heading={"Manage Users"}

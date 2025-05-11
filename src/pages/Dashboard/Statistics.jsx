@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth";
 const Statistics = () => {
   const { user } = useAuth();
   return (
-    <div className="aside-layout">
+    <div>
       <title>Dashboard | Pathway</title>
       <PageHeading
         heading={`Welcome To Dashboard, ${user?.displayName}`}
