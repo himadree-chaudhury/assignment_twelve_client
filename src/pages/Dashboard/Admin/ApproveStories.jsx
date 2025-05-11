@@ -4,12 +4,14 @@ import { useQuery } from "@tanstack/react-query";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
-import { FiEye, FiUserCheck } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ApproveStories = () => {
   // *Context States
-  // const { user } = useAuth();
+  const MySwal = withReactContent(Swal);
   const axiosSecure = useAxiosSecure();
 
   // *Delete State
@@ -23,6 +25,51 @@ const ApproveStories = () => {
       return data;
     },
   });
+
+  // *Handle story
+  const viewStory = (story) => {
+    MySwal.fire({
+      title: story.title,
+      html: (
+        <div className="z-[1000000] space-y-3 text-left">
+          <p>
+            <strong>Review:</strong> {story.review} out of 5
+          </p>
+          <img
+            src={story.image}
+            alt={story.title}
+            style={{ maxWidth: "100%", marginTop: "10px" }}
+            className="rounded-lg"
+          />
+          <p>
+            <strong>Story ID:</strong> {story.storyId}
+          </p>
+          <p>
+            <strong>Marriage Date:</strong>{" "}
+            {new Date(story.marriageDate).toLocaleDateString()}
+          </p>
+          <div className="flex gap-2">
+            <p>
+              <strong>Male Biodata ID:</strong> {story.maleBiodataId}
+            </p>
+            <p>
+              <strong>Female Biodata ID:</strong> {story.femaleBiodataId}
+            </p>
+          </div>
+          <p>
+            <strong>Story:</strong> {story.story}
+          </p>
+          <p>
+            <strong>Created At:</strong>{" "}
+            {new Date(story.createdAt).toLocaleDateString()}
+          </p>
+        </div>
+      ),
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
+  };
+
   return (
     <div className="">
       <title>Success Story | Pathway</title>
@@ -63,6 +110,7 @@ const ApproveStories = () => {
                       </td>
                       <td>
                         <motion.button
+                          onClick={()=>viewStory(story)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="text-success hover:text-success-hover"

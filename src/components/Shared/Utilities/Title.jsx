@@ -26,9 +26,9 @@ const Title = () => {
         {/* Website Title */}
         <h1 className="title-style">Pathway</h1>
         {/* Trademark Symbol */}
-        {/* <h2>
+        <h2>
           <sup>&trade;</sup>
-        </h2> */}
+        </h2>
       </Link>
     </div>
   );
