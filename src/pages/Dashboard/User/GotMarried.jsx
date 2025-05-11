@@ -2,35 +2,36 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
-import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
   FiCheck,
-  FiEye,
+  FiCheckCircle,
   FiFileText,
   FiImage,
   FiInfo,
-  FiList,
-  FiPhone,
   FiRss,
   FiUpload,
-  FiUser,
-  FiWind,
 } from "react-icons/fi";
 import { useState } from "react";
 import { imageUpload } from "../../../api/imageUpload";
+import HoverRating from "../../../components/Dashboard/Form/HoverRating";
 
 const GotMarried = () => {
   const navigate = useNavigate();
   // *Context States
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [rating, setRating] = useState(2);
 
   const [uploadImage, setUploadImage] = useState({
     image: { name: "Upload Image" },
   });
+
+  // *handle rating
+  const handleRatingChange = (newValue) => {
+    setRating(newValue);
+  };
 
   // *Hook Form States
   const {
@@ -44,7 +45,7 @@ const GotMarried = () => {
     console.log(data);
     try {
       // *Upload the image to ImgBB
-      const imageFile = data.profileImage[0];
+      const imageFile = data.image[0];
       const imageUrl = await imageUpload(imageFile);
 
       setUploadImage({
@@ -53,20 +54,17 @@ const GotMarried = () => {
       });
       console.log(uploadImage);
 
-      await axiosSecure.post(`/add-biodata`, {
+      await axiosSecure.post(`/got-married`, {
         ...data,
-        dateOfBirth: new Date(data.dateOfBirth).toISOString(),
-        age: Number(data.age),
-        height: Number(data.height),
-        weight: Number(data.weight),
-        profileImage: imageUrl,
-        expectedPartnerAge: Number(data.expectedPartnerAge),
-        expectedPartnerHeight: Number(data.expectedPartnerHeight),
-        expectedPartnerWeight: Number(data.expectedPartnerWeight),
-        biodataCreatedTime: new Date(),
+        marriageDate: new Date(data.marriageDate).toISOString(),
+        maleBiodataId: Number(data.maleBiodataId),
+        femaleBiodataId: Number(data.femaleBiodataId),
+        image: imageUrl,
+        review: rating,
+        createdAt: new Date(),
       });
 
-      toast.success("Car Added Successfully!");
+      toast.success("Story Added Successfully!");
       navigate("");
     } catch (e) {
       toast.error(e);
@@ -117,25 +115,24 @@ const GotMarried = () => {
             <div className="space-y-4">
               {/* title input */}
               <div>
-                <label htmlFor="name">Name *</label>
+                <label htmlFor="title">Title *</label>
                 <input
                   type="text"
-                  id="name"
-                  defaultValue={user?.displayName}
-                  {...register("name", {
-                    required: "Name Is Required",
+                  id="title"
+                  {...register("title", {
+                    required: "Title Is Required",
                     minLength: {
                       value: 3,
-                      message: "Name Must Be At Least 3 Characters",
+                      message: "Title Must Be At Least 3 Characters",
                     },
                   })}
                   className={`border px-4 py-2 ${
-                    errors.name && "border-error focus:ring-error"
+                    errors.title && "border-error focus:ring-error"
                   } `}
-                  placeholder="e.g. Himadree Chaudhury"
+                  placeholder="e.g. Filters Lead to Joyous Marriage"
                 />
-                {errors.name && (
-                  <p className="error-massage">{errors.name.message}</p>
+                {errors.title && (
+                  <p className="error-massage">{errors.title.message}</p>
                 )}
               </div>
             </div>
@@ -150,82 +147,69 @@ const GotMarried = () => {
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* maleBiodataId input */}
               <div>
-                <label htmlFor="height">Height(cm) *</label>
+                <label htmlFor="maleBiodataId">Male Biodata ID *</label>
                 <input
                   type="number"
-                  id="height"
-                  {...register("height", {
-                    required: "Height Is Required",
+                  id="maleBiodataId"
+                  {...register("maleBiodataId", {
+                    required: "Male Biodata ID Is Required",
                     min: {
                       value: 1,
-                      message: "Height Must Be Greater Than 0",
+                      message: "Male Biodata ID Must Be Greater Than 0",
                     },
                   })}
                   className={`border px-4 py-2 ${
-                    errors.height && "border-error focus:ring-error"
+                    errors.maleBiodataId && "border-error focus:ring-error"
                   } `}
-                  placeholder="170"
+                  placeholder="e.g. 17"
                 />
-                {errors.height && (
-                  <p className="error-massage">{errors.height.message}</p>
+                {errors.maleBiodataId && (
+                  <p className="error-massage">
+                    {errors.maleBiodataId.message}
+                  </p>
                 )}
               </div>
 
               {/* femaleBiodataId input */}
               <div>
-                <label htmlFor="weight">Weight(kg) *</label>
+                <label htmlFor="femaleBiodataId">Female Biodata ID *</label>
                 <input
                   type="number"
-                  id="weight"
-                  {...register("weight", {
-                    required: "Weight Is Required",
+                  id="femaleBiodataId"
+                  {...register("femaleBiodataId", {
+                    required: "Female Biodata ID Is Required",
                     min: {
                       value: 1,
                       message: "Wight Must Be Greater Than 0",
                     },
                   })}
                   className={`border px-4 py-2 ${
-                    errors.weight && "border-error focus:ring-error"
+                    errors.femaleBiodataId && "border-error focus:ring-error"
                   } `}
-                  placeholder="50"
+                  placeholder="e.g. 15"
                 />
-                {errors.weight && (
-                  <p className="error-massage">{errors.weight.message}</p>
+                {errors.femaleBiodataId && (
+                  <p className="error-massage">
+                    {errors.femaleBiodataId.message}
+                  </p>
                 )}
               </div>
 
               {/* marriageDate input */}
               <div>
-                <label htmlFor="dateOfBirth">Date of Birth *</label>
+                <label htmlFor="marriageDate">Marriage Date *</label>
                 <input
                   type="date"
-                  id="dateOfBirth"
-                  {...register("dateOfBirth", {
-                    required: "Date of Birth Is Required",
+                  id="marriageDate"
+                  {...register("marriageDate", {
+                    required: "Marriage Date Is Required",
                   })}
                   className={`border px-4 py-2 ${
-                    errors.dateOfBirth && "border-error focus:ring-error"
+                    errors.marriageDate && "border-error focus:ring-error"
                   } `}
                 />
-                {errors.dateOfBirth && (
-                  <p className="error-massage">{errors.dateOfBirth.message}</p>
-                )}
-              </div>
-
-              {/* review input */}
-              <div>
-                <label htmlFor="age">Age</label>
-                <input
-                  type="number"
-                  id="age"
-                  {...register("age")}
-                  className={`border px-4 py-2 ${
-                    errors.age && "border-error focus:ring-error"
-                  } `}
-                  placeholder="23"
-                />
-                {errors.age && (
-                  <p className="error-massage">{errors.age.message}</p>
+                {errors.marriageDate && (
+                  <p className="error-massage">{errors.marriageDate.message}</p>
                 )}
               </div>
             </div>
@@ -244,11 +228,11 @@ const GotMarried = () => {
                   <input
                     className="hidden w-36 cursor-pointer text-sm"
                     type="file"
-                    name="profileImage"
-                    id="profileImage"
+                    name="image"
+                    id="image"
                     accept="image/*"
                     hidden
-                    {...register("profileImage")}
+                    {...register("image")}
                   />
                   <div className="bg-primary hover:bg-primary-hover flex-centric cursor-pointer gap-2 rounded px-5 py-2 font-semibold text-white">
                     <FiUpload className="text-xl" />
@@ -269,19 +253,32 @@ const GotMarried = () => {
 
               {/* description input */}
               <div>
-                <label htmlFor="description">Personal Description </label>
+                <label htmlFor="story">Story </label>
                 <textarea
-                  id="description"
-                  {...register("description")}
+                  id="story"
+                  {...register("story")}
                   className={`border px-4 py-2 ${
-                    errors.description && "border-error focus:ring-error"
+                    errors.story && "border-error focus:ring-error"
                   } `}
                   rows={4}
-                  placeholder="e.g. I am a passionate software engineer who loves coding and exploring new technologies. Seeking a kind-hearted partner who values family and growth."
+                  placeholder="e.g. Arif and Emma connected through shared family values. Their Pathway journey ended in a heartfelt wedding ceremony."
                 />
-                {errors.description && (
-                  <p className="error-massage">{errors.description.message}</p>
+                {errors.story && (
+                  <p className="error-massage">{errors.story.message}</p>
                 )}
+              </div>
+            </div>
+          </motion.div>
+          {/* story section */}
+          <motion.div variants={itemVariants} className="space-y-6">
+            <div className="rounded-lg p-4">
+              <h3 className="text-error mb-3 flex items-center text-lg font-semibold">
+                <FiCheckCircle className="mr-2" /> Rate The Platform
+              </h3>
+
+              {/* review input */}
+              <div>
+                <HoverRating value={rating} onChange={handleRatingChange} />
               </div>
             </div>
           </motion.div>
@@ -295,7 +292,7 @@ const GotMarried = () => {
               className="btn-primary flex-centric"
             >
               <FiCheck className="mr-2" />
-              Save & Publish
+              Submit Story
             </motion.button>
           </motion.div>
         </motion.form>

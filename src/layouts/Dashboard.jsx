@@ -20,7 +20,7 @@ import { PageContainer } from "@toolpad/core/PageContainer";
 import { Outlet, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { Chip, Stack, Tooltip, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 // Base navigation items
 const BASE_NAVIGATION = [
@@ -154,6 +154,12 @@ const Dashboard = () => {
       "contact-request",
       "favourite-biodata",
       "got-married",
+      // admin routes
+      "statistics",
+      "manage-users",
+      "approved-premium",
+      "approved-contact-request",
+      "success-story",
     ];
     const adminNavSegments = [
       "statistics",
@@ -188,8 +194,10 @@ const Dashboard = () => {
 
   function CustomAppTitle() {
     return (
-      <Stack direction="row" alignItems="center" spacing={2} >
-        <Typography variant="h4" className="title-style">Pathway</Typography>
+      <Stack direction="row" alignItems="center" spacing={2}>
+        <Typography variant="h4" className="title-style">
+          Pathway
+        </Typography>
       </Stack>
     );
   }

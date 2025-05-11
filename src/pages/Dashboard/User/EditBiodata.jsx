@@ -64,7 +64,7 @@ const EditBiodata = () => {
         biodataCreatedTime: new Date(),
       });
 
-      toast.success("Car Added Successfully!");
+      toast.success("Biodata Added Successfully!");
       navigate("");
     } catch (e) {
       toast.error(e);
@@ -280,7 +280,7 @@ const EditBiodata = () => {
                     className={`border px-4 py-2 ${
                       errors.age && "border-error focus:ring-error"
                     } `}
-                    placeholder="23"
+                    placeholder="e.g. 23"
                   />
                   {errors.age && (
                     <p className="error-massage">{errors.age.message}</p>
@@ -303,7 +303,7 @@ const EditBiodata = () => {
                     className={`border px-4 py-2 ${
                       errors.height && "border-error focus:ring-error"
                     } `}
-                    placeholder="170"
+                    placeholder="e.g. 170"
                   />
                   {errors.height && (
                     <p className="error-massage">{errors.height.message}</p>
@@ -326,7 +326,7 @@ const EditBiodata = () => {
                     className={`border px-4 py-2 ${
                       errors.weight && "border-error focus:ring-error"
                     } `}
-                    placeholder="50"
+                    placeholder="e.g. 50"
                   />
                   {errors.weight && (
                     <p className="error-massage">{errors.weight.message}</p>
