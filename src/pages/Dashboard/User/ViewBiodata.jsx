@@ -1,5 +1,5 @@
-import React from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
@@ -14,51 +14,45 @@ import {
   FiHeart,
   FiDatabase,
 } from "react-icons/fi";
-import LoadingSpinner from "../../../components/Shared/Utilities/LoadingSpinner";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
 
 const ViewBiodata = () => {
-  const { user } = useAuth();
+  const { dbUser } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
 
   // *Fetch biodata details
-  const {
-    data: biodata,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["self-biodata", user?.email],
+  const { data: biodata, isLoading } = useQuery({
+    queryKey: ["self-biodata", dbUser?.email],
     queryFn: async () => {
-      if (!user?.email) return null;
+      if (!dbUser?.email) return null;
       const { data } = await axiosSecure(`/self-biodata`);
       return data || null;
     },
-    enabled: !!user?.email,
+    enabled: !!dbUser?.email,
   });
 
-  // Mutation to make biodata premium using email
-  const mutation = useMutation({
-    mutationFn: async () => {
-      await axiosSecure.patch(
-        `/biodata/${encodeURIComponent(user.email)}/make-premium`,
-        { isPremium: true },
-      );
-    },
-    onSuccess: () => {
-      toast.success("Biodata is now Premium!");
-      refetch();
-    },
-    onError: (error) => {
-      toast.error(error.message || "Failed to make biodata premium");
-    },
-  });
-
-  const handleMakePremium = () => {
-    if (biodata?.isPremium) {
+  // *Handle premium request
+  const handleMakePremium = async (biodata) => {
+    if (biodata?.isPremium || dbUser.role === "Premium User") {
       toast.error("This biodata is already Premium!");
       return;
     }
-    mutation.mutate();
+
+    // *Post request
+    try {
+      setLoading(true);
+      await axiosSecure.post("/premium-request", {
+        requestedName: biodata.name,
+        requestedBiodataId: biodata.biodataId,
+      });
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      dbUser.role = "Biodata Premium Requested";
+      toast.success("Request Successful");
+      setLoading(false);
+    }
   };
 
   return (
@@ -126,7 +120,7 @@ const ViewBiodata = () => {
                       {new Date(biodata.dateOfBirth).toLocaleDateString()}
                     </p>
                     <p>
-                      <strong>Age:</strong> {biodata.age}
+                      <strong>Age:</strong> {biodata?.age || "Not specified"}
                     </p>
                     <p>
                       <strong>Height:</strong> {biodata.height} cm
@@ -136,10 +130,6 @@ const ViewBiodata = () => {
                     </p>
                     <p>
                       <strong>Race:</strong> {biodata.race}
-                    </p>
-                    <p>
-                      <strong>Religion:</strong>{" "}
-                      {biodata.religion || "Not specified"}
                     </p>
                   </div>
                 </div>
@@ -152,6 +142,10 @@ const ViewBiodata = () => {
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <p>
                       <strong>Occupation:</strong> {biodata.occupation}
+                    </p>
+                    <p>
+                      <strong>Religion:</strong>{" "}
+                      {biodata.religion || "Not specified"}
                     </p>
                   </div>
                 </div>
@@ -211,7 +205,12 @@ const ViewBiodata = () => {
                     </p>
                     <p>
                       <strong>Premium Status:</strong>{" "}
-                      {biodata.isPremium ? "Premium" : "Not Premium"}
+                      <span
+                        className={`rounded px-2.5 py-0.5 text-sm font-medium ${biodata?.isPremium ? "text-primary bg-pink-100" : "text-text-secondary bg-gray-200"}`}
+                      >
+                        {" "}
+                        {biodata.isPremium ? "Premium" : "Not Premium"}
+                      </span>
                     </p>
                     <p>
                       <strong>Created At:</strong>{" "}
@@ -228,16 +227,23 @@ const ViewBiodata = () => {
 
                 {/* Make Premium Button */}
                 <div className="mt-6 flex justify-center">
-                  <button
-                    onClick={handleMakePremium}
-                    disabled={mutation.isLoading || biodata.isPremium}
-                    className={`btn-primary flex-centric`}
-                  >
-                    <FiDollarSign className="mr-2" />
-                    {mutation.isLoading
-                      ? "Processing..."
-                      : "Make Biodata Premium"}
-                  </button>
+                  {dbUser.role === "User" ? (
+                    <button
+                      onClick={() => handleMakePremium(biodata)}
+                      // disabled={mutation.isLoading || biodata.isPremium}
+                      className={`btn-primary flex-centric`}
+                    >
+                      <FiDollarSign className="mr-2" />
+                      {loading ? "Processing..." : "Make Biodata Premium"}
+                    </button>
+                  ) : dbUser.role === "Premium User" ? (
+                    ""
+                  ) : (
+                    <button disabled className={`btn-primary flex-centric`}>
+                      <FiDollarSign className="mr-2" />
+                      Requested for Premium User
+                    </button>
+                  )}
                 </div>
               </div>
             ) : (

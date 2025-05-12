@@ -26,6 +26,9 @@ const EditBiodata = () => {
   // *Context States
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const [uploadImage, setUploadImage] = useState({
+    image: { name: "Upload Image" },
+  });
 
   // *Hook Form States
   const {
@@ -72,10 +75,6 @@ const EditBiodata = () => {
     }
   }, [biodata, reset]);
 
-  const [uploadImage, setUploadImage] = useState({
-    image: { name: "Upload Image" },
-  });
-
   // *Handles Form Submission
   const onSubmit = async (data) => {
     console.log(data);
@@ -91,6 +90,7 @@ const EditBiodata = () => {
         });
         console.log(uploadImage);
 
+        // *Post the biodata to database
         await axiosSecure.post(`/add-biodata`, {
           ...data,
           dateOfBirth: new Date(data.dateOfBirth).toISOString(),
@@ -105,6 +105,7 @@ const EditBiodata = () => {
         });
       }
       if (biodata) {
+        // *Update the existing biodata in database
         await axiosSecure.put(`/update-biodata/${biodata?._id}`, {
           ...data,
           dateOfBirth: new Date(data.dateOfBirth).toISOString(),
@@ -436,9 +437,9 @@ const EditBiodata = () => {
               </div>
             </motion.div>
 
+            {/* image Section */}
             {!biodata && (
               <div>
-                {/* image Section */}
                 <motion.div
                   variants={itemVariants}
                   className="mb-6 rounded-lg p-4"

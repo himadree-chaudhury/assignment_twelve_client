@@ -110,7 +110,7 @@ const ApproveStories = () => {
                       </td>
                       <td>
                         <motion.button
-                          onClick={()=>viewStory(story)}
+                          onClick={() => viewStory(story)}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           className="text-success hover:text-success-hover"
