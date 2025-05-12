@@ -5,7 +5,6 @@ import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import Swal from "sweetalert2";
 import {
   FiCheck,
   FiCheckCircle,
@@ -64,10 +63,7 @@ const GotMarried = () => {
         review: rating,
         createdAt: new Date(),
       });
-      Swal.fire({
-        text: "That thing is still around?",
-        icon: "success",
-      });
+      toast.success("Story Added Successfully!");
       navigate("/");
     } catch (e) {
       toast.error(e);

@@ -210,13 +210,19 @@ const ViewBiodata = () => {
                       <strong>Biodata ID:</strong> {biodata.biodataId}
                     </p>
                     <p>
-                      <strong>Created At:</strong>{" "}
-                      {new Date(biodata.biodataCreatedTime).toLocaleString()}
-                    </p>
-                    <p>
                       <strong>Premium Status:</strong>{" "}
                       {biodata.isPremium ? "Premium" : "Not Premium"}
                     </p>
+                    <p>
+                      <strong>Created At:</strong>{" "}
+                      {new Date(biodata.biodataCreatedTime).toLocaleString()}
+                    </p>
+                    {biodata?.biodataUpdatedTime && (
+                      <p>
+                        <strong>Last Update At:</strong>{" "}
+                        {new Date(biodata.biodataUpdatedTime).toLocaleString()}
+                      </p>
+                    )}
                   </div>
                 </div>
 

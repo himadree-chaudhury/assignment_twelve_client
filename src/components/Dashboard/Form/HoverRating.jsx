@@ -39,7 +39,7 @@ export default function HoverRating({ value, onChange }) {
   };
 
   return (
-    <Box sx={{ width: 200, display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center" }}>
       <Rating
         name="hover-feedback"
         value={internalValue}
@@ -49,10 +49,24 @@ export default function HoverRating({ value, onChange }) {
         onChangeActive={(event, newHover) => {
           setHover(newHover);
         }}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+        sx={{
+          "& .MuiRating-icon": {
+            fontSize: "2rem", // Custom star size
+            marginRight: "4px", // Adjust spacing between stars
+          },
+        }}
+        emptyIcon={
+          <StarIcon
+            style={{ opacity: 0.55 }}
+            fontSize="inherit"
+            sx={{ fontSize: "2rem" }} // Match empty icon size
+          />
+        }
       />
       {internalValue !== null && (
-        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : internalValue]}</Box>
+        <Box sx={{ ml: 2, fontSize: "1.1rem" }}>
+          {labels[hover !== -1 ? hover : internalValue]}
+        </Box>
       )}
     </Box>
   );

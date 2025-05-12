@@ -17,8 +17,9 @@ import {
   FiUser,
   FiWind,
 } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { imageUpload } from "../../../api/imageUpload";
+import { useQuery } from "@tanstack/react-query";
 
 const EditBiodata = () => {
   const navigate = useNavigate();
@@ -26,46 +27,100 @@ const EditBiodata = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const [uploadImage, setUploadImage] = useState({
-    image: { name: "Upload Image" },
-  });
-
   // *Hook Form States
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
+
+  // *Fetch biodata details
+  const { data: biodata } = useQuery({
+    queryKey: ["self-biodata", user?.email],
+    queryFn: async () => {
+      if (!user?.email) return null;
+      const { data } = await axiosSecure(`/self-biodata`);
+      return data || null;
+    },
+    enabled: !!user?.email,
+  });
+
+  // *Reset the filed value with sever response
+  useEffect(() => {
+    if (biodata) {
+      reset({
+        biodataType: biodata.biodataType,
+        name: biodata.name,
+        dateOfBirth: biodata.dateOfBirth.split("T")[0],
+        height: biodata.height,
+        weight: biodata.weight,
+        age: biodata.age,
+        occupation: biodata.occupation,
+        race: biodata.race,
+        religion: biodata.religion,
+        fathersName: biodata.fathersName,
+        mothersName: biodata.mothersName,
+        permanentDivision: biodata.permanentDivision,
+        presentDivision: biodata.presentDivision,
+        expectedPartnerAge: biodata.expectedPartnerAge,
+        expectedPartnerHeight: biodata.expectedPartnerHeight,
+        expectedPartnerWeight: biodata.expectedPartnerWeight,
+        mobileNumber: biodata.mobileNumber,
+        description: biodata.description,
+      });
+    }
+  }, [biodata, reset]);
+
+  const [uploadImage, setUploadImage] = useState({
+    image: { name: "Upload Image" },
+  });
 
   // *Handles Form Submission
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      // *Upload the image to ImgBB
-      const imageFile = data.profileImage[0];
-      const imageUrl = await imageUpload(imageFile);
+      if (!biodata) {
+        // *Upload the image to ImgBB
+        const imageFile = data.profileImage[0];
+        const imageUrl = await imageUpload(imageFile);
 
-      setUploadImage({
-        image: imageFile,
-        url: imageUrl,
-      });
-      console.log(uploadImage);
+        setUploadImage({
+          image: imageFile,
+          url: imageUrl,
+        });
+        console.log(uploadImage);
 
-      await axiosSecure.post(`/add-biodata`, {
-        ...data,
-        dateOfBirth: new Date(data.dateOfBirth).toISOString(),
-        age: Number(data.age),
-        height: Number(data.height),
-        weight: Number(data.weight),
-        profileImage: imageUrl,
-        expectedPartnerAge: Number(data.expectedPartnerAge),
-        expectedPartnerHeight: Number(data.expectedPartnerHeight),
-        expectedPartnerWeight: Number(data.expectedPartnerWeight),
-        biodataCreatedTime: new Date(),
-      });
-
-      toast.success("Biodata Added Successfully!");
-      navigate("");
+        await axiosSecure.post(`/add-biodata`, {
+          ...data,
+          dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+          age: Number(data.age),
+          height: Number(data.height),
+          weight: Number(data.weight),
+          profileImage: imageUrl,
+          expectedPartnerAge: Number(data.expectedPartnerAge),
+          expectedPartnerHeight: Number(data.expectedPartnerHeight),
+          expectedPartnerWeight: Number(data.expectedPartnerWeight),
+          biodataCreatedTime: new Date(),
+        });
+      }
+      if (biodata) {
+        await axiosSecure.put(`/update-biodata/${biodata?._id}`, {
+          ...data,
+          dateOfBirth: new Date(data.dateOfBirth).toISOString(),
+          age: Number(data.age),
+          height: Number(data.height),
+          weight: Number(data.weight),
+          expectedPartnerAge: Number(data.expectedPartnerAge),
+          expectedPartnerHeight: Number(data.expectedPartnerHeight),
+          expectedPartnerWeight: Number(data.expectedPartnerWeight),
+          biodataUpdatedTime: new Date(),
+        });
+      }
+      toast.success(
+        `${biodata ? "Biodata Update Successfully!" : "Biodata Added Successfully!"}`,
+      );
+      navigate("/dashboard/view-biodata");
     } catch (e) {
       toast.error(e);
     }
@@ -97,7 +152,7 @@ const EditBiodata = () => {
       <div className="">
         <PageHeading
           heading={"Edit Biodata"}
-          text={"Update your profile to find the perfect match"}
+          text={`${biodata ? "You have already uploaded your profile. Edit to update" : "Add your profile to find the perfect match"}`}
         />
 
         {/* biodata input form */}
@@ -120,7 +175,7 @@ const EditBiodata = () => {
                   <input
                     type="text"
                     id="name"
-                    defaultValue={user?.displayName}
+                    defaultValue={biodata?.name || user?.displayName}
                     {...register("name", {
                       required: "Name Is Required",
                       minLength: {
@@ -381,34 +436,43 @@ const EditBiodata = () => {
               </div>
             </motion.div>
 
-            {/* image Section */}
-            <motion.div variants={itemVariants} className="mb-6 rounded-lg p-4">
-              <h3 className="text-warning mb-3 flex items-center text-lg font-semibold">
-                <FiImage className="mr-2" /> Image
-              </h3>
+            {!biodata && (
+              <div>
+                {/* image Section */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-6 rounded-lg p-4"
+                >
+                  <h3 className="text-warning mb-3 flex items-center text-lg font-semibold">
+                    <FiImage className="mr-2" /> Image
+                  </h3>
 
-              {/* image input */}
-              <div className="border-primary rounded-lg border-3 border-dotted px-5 py-3">
-                <div className="mx-auto flex w-max flex-col text-center">
-                  <label>
-                    <input
-                      className="hidden w-36 cursor-pointer text-sm"
-                      type="file"
-                      name="profileImage"
-                      id="profileImage"
-                      accept="image/*"
-                      hidden
-                      {...register("profileImage")}
-                    />
-                    <div className="bg-primary hover:bg-primary-hover flex-centric cursor-pointer gap-2 rounded px-5 py-2 font-semibold text-white">
-                      <FiUpload className="text-xl" />
-                      {uploadImage?.image?.name}
-                      {/* {shortImageName(uploadImage?.image)} */}
+                  {/* image input */}
+                  <div className="border-primary rounded-lg border-3 border-dotted px-5 py-3">
+                    <div className="mx-auto flex w-max flex-col text-center">
+                      <label>
+                        <input
+                          className="hidden w-36 cursor-pointer text-sm"
+                          type="file"
+                          name="profileImage"
+                          id="profileImage"
+                          accept="image/*"
+                          hidden
+                          {...register("profileImage")}
+                        />
+                        <div className="bg-primary hover:bg-primary-hover flex-centric cursor-pointer gap-2 rounded px-5 py-2 font-semibold text-white">
+                          <FiUpload className="text-xl" />
+                          {uploadImage?.image?.name}
+                        </div>
+                      </label>
                     </div>
-                  </label>
-                </div>
+                  </div>
+                  <p className="mt-2 text-xs">
+                    Upload Carefully. You can't update the image in future.
+                  </p>
+                </motion.div>
               </div>
-            </motion.div>
+            )}
 
             {/* lifestyle Section */}
             <motion.div variants={itemVariants} className="mb-6 rounded-lg p-4">
@@ -416,7 +480,7 @@ const EditBiodata = () => {
                 <FiWind className="mr-2" /> Lifestyle
               </h3>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-4">
                 {/* occupation input */}
                 <div>
                   <label htmlFor="occupation">Occupation *</label>
@@ -460,6 +524,65 @@ const EditBiodata = () => {
                   {errors.religion && (
                     <p className="error-massage">{errors.religion.message}</p>
                   )}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Contact section */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="rounded-lg p-4">
+                <h3 className="text-warning mb-3 flex items-center text-lg font-semibold">
+                  <FiPhone className="mr-2" /> Contact Info
+                </h3>
+                <div className="space-y-4">
+                  {/* contact input */}
+                  <div>
+                    <label htmlFor="mobileNumber">Mobile Number *</label>
+                    <input
+                      type="number"
+                      id="mobileNumber"
+                      {...register("mobileNumber", {
+                        required: "Mobile Number Is Required",
+                        maxLength: 11,
+                      })}
+                      className={`border px-4 py-2 ${
+                        errors.mobileNumber && "border-error focus:ring-error"
+                      } `}
+                      placeholder="e.g. 012345678901"
+                    />
+                    {errors.mobileNumber && (
+                      <p className="error-massage">
+                        {errors.mobileNumber.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* email input */}
+                  <div>
+                    <label htmlFor="contactEmail">
+                      Email Address (Read Only)
+                    </label>
+                    <fieldset disabled>
+                      <input
+                        type="email"
+                        id="contactEmail"
+                        value={user?.email}
+                        readOnly
+                        {...register("contactEmail")}
+                        className={`border px-4 py-2 ${
+                          errors.contactEmail && "border-error focus:ring-error"
+                        } `}
+                      />
+                    </fieldset>
+                    {errors.contactEmail && (
+                      <p className="error-massage">
+                        {errors.contactEmail.message}
+                      </p>
+                    )}
+                    <p className="mt-2 text-xs">
+                      Logged in email. You can't change the email.
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -552,62 +675,6 @@ const EditBiodata = () => {
                 </div>
               </div>
             </motion.div>
-
-            {/* Contact section */}
-            <motion.div variants={itemVariants} className="space-y-6">
-              <div className="rounded-lg p-4">
-                <h3 className="text-warning mb-3 flex items-center text-lg font-semibold">
-                  <FiPhone className="mr-2" /> Contact Info
-                </h3>
-                <div className="space-y-4">
-                  {/* contact input */}
-                  <div>
-                    <label htmlFor="mobileNumber">Mobile Number *</label>
-                    <input
-                      type="number"
-                      id="mobileNumber"
-                      {...register("mobileNumber", {
-                        required: "Mobile Number Is Required",
-                        maxLength: 11,
-                      })}
-                      className={`border px-4 py-2 ${
-                        errors.mobileNumber && "border-error focus:ring-error"
-                      } `}
-                      placeholder="e.g. 012345678901"
-                    />
-                    {errors.mobileNumber && (
-                      <p className="error-massage">
-                        {errors.mobileNumber.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* email input */}
-                  <div>
-                    <label htmlFor="contactEmail">
-                      Email Address (Read Only)
-                    </label>
-                    <input
-                      type="email"
-                      id="contactEmail"
-                      value={user?.email}
-                      {...register("contactEmail", {
-                        required: true,
-                        pattern: /^\S+@\S+$/i,
-                      })}
-                      className={`border px-4 py-2 ${
-                        errors.contactEmail && "border-error focus:ring-error"
-                      } `}
-                    />
-                    {errors.contactEmail && (
-                      <p className="error-massage">
-                        {errors.contactEmail.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
           </div>
 
           {/* Description section */}
@@ -645,7 +712,7 @@ const EditBiodata = () => {
               className="btn-primary flex-centric"
             >
               <FiCheck className="mr-2" />
-              Save & Publish
+              {biodata ? "Update" : "Save & Publish"}
             </motion.button>
           </motion.div>
         </motion.form>
