@@ -14,7 +14,7 @@ const ApproveContacts = () => {
   const { data: contactRequests, isLoading } = useQuery({
     queryKey: ["contact-request-list"],
     queryFn: async () => {
-      const { data } = await axiosSecure("/contact-request-list");
+      const { data } = await axiosSecure("/all-contact-request");
       return data;
     },
   });
@@ -45,7 +45,7 @@ const ApproveContacts = () => {
                 <AnimatePresence>
                   {contactRequests.map((request) => (
                     <motion.tr
-                      key={request.biodataId}
+                      key={request._id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
