@@ -20,13 +20,13 @@ const ApproveContacts = () => {
   });
 
   return (
-    <div className="">
+    <div>
       <title>Approved Contact Requests | Pathway</title>
       <PageHeading
         heading={"Approved Contact Requests"}
         text={"Confirm and connect with approved contacts"}
       />
-      <div className="">
+      <div>
         {isLoading ? (
           <DashboardSkeleton />
         ) : contactRequests.length > 0 ? (

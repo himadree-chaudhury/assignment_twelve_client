@@ -71,13 +71,13 @@ const ApproveStories = () => {
   };
 
   return (
-    <div className="">
+    <div>
       <title>Success Story | Pathway</title>
       <PageHeading
         heading={"Success Story"}
         text={"View All stories at a glance"}
       />
-      <div className="">
+      <div>
         {isLoading ? (
           <DashboardSkeleton />
         ) : stories.length > 0 ? (

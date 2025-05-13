@@ -18,13 +18,13 @@ const ManageUsers = () => {
   });
 
   return (
-    <div className="">
+    <div>
       <title>Manage Users | Pathway</title>
       <PageHeading
         heading={"Manage Users"}
         text={"Oversee and support all platform members"}
       />
-      <div className="">
+      <div>
         {isLoading ? (
           <DashboardSkeleton />
         ) : users.length > 0 ? (

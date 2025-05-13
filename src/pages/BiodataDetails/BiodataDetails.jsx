@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import LoadingSpinner from "../../components/Shared/Utilities/LoadingSpinner";
 import BioDataCard from "../../components/Shared/Card/BioDataCard";
 import { GiSelfLove } from "react-icons/gi";
@@ -12,9 +13,9 @@ const BiodataDetails = () => {
   const { dbUser } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isFavourite, setIsFavourite] = useState(false);
   // const [showContact, setShowContact] = useState(false);
-  const [contactRequest, setContactRequest] = useState(false);
 
   // *fetch data using query
 
@@ -36,9 +37,6 @@ const BiodataDetails = () => {
       setIsFavourite(
         dbUser.favouriteIDs.includes(biodata.biodataId.toString()),
       );
-      setContactRequest(
-        dbUser.requestedContactIDs.includes(biodata.biodataId.toString()),
-      );
     }
   }, [biodata, dbUser]);
 
@@ -49,19 +47,33 @@ const BiodataDetails = () => {
     } catch (error) {
       toast.error(error);
     } finally {
+      toast.success("Biodata Added To Favourite !");
       setIsFavourite(true);
     }
   };
 
   // *handle premium contact request
   const handlePremiumContactRequest = async () => {
-    try {
-      await axiosSecure.post(`/contact-request/${biodata?.biodataId}`);
-    } catch (error) {
-      toast.error(error);
-    } finally {
-      setContactRequest(true);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You have to pay $5 to see this premium contact!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, confirm!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.post(`/contact-request/${biodata?.biodataId}`);
+        } catch (error) {
+          toast.error(error);
+        } finally {
+          toast.success("Contact Request Successfully Placed !");
+          navigate("/dashboard/contact-request");
+        }
+      }
+    });
   };
 
   useEffect(() => {
@@ -74,7 +86,7 @@ const BiodataDetails = () => {
       {/* Header Section with Favourite Button */}
       <div className="mb-6 flex flex-col items-start justify-between md:flex-row lg:items-center">
         <div className="flex items-center space-x-4">
-          <h2 className="">{biodata.name}'s Profile</h2>
+          <h2>{biodata.name}'s Profile</h2>
         </div>
         {biodata.isPremium && (
           <span className="text-primary rounded-full bg-pink-100 px-3 py-1 text-sm font-medium">
@@ -192,12 +204,9 @@ const BiodataDetails = () => {
         {biodata.isPremium ? (
           <button
             className="btn-primary"
-            disabled={contactRequest}
             onClick={() => handlePremiumContactRequest()}
           >
-            {contactRequest
-              ? "Contact Information Requested"
-              : "Request Contact Information"}
+            Request Contact Information
           </button>
         ) : (
           <div className="space-y-2">

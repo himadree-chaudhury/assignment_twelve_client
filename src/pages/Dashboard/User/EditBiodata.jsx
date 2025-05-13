@@ -148,9 +148,9 @@ const EditBiodata = () => {
     },
   };
   return (
-    <div className="">
+    <div>
       <title>Edit Biodata | Pathway</title>
-      <div className="">
+      <div>
         <PageHeading
           heading={"Edit Biodata"}
           text={`${biodata ? "You have already uploaded your profile. Edit to update" : "Add your profile to find the perfect match"}`}

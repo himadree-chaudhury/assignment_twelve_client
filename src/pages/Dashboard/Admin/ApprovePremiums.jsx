@@ -18,13 +18,13 @@ const ApprovePremiums = () => {
     },
   });
   return (
-    <div className="">
+    <div>
       <title>Approved Premium Members | Pathway</title>
       <PageHeading
         heading={"Approved Premium Members"}
         text={"View and manage premium user privileges"}
       />
-      <div className="">
+      <div>
         {isLoading ? (
           <DashboardSkeleton />
         ) : premiumRequests.length > 0 ? (

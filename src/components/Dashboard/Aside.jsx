@@ -220,7 +220,7 @@ const Aside = () => {
               )}
             </NavLink>
           </div>
-          <div className="">
+          <div>
             {/* Dark mode toggling */}
             <div className="flex-centric justify-start">
               {/* toggling button */}

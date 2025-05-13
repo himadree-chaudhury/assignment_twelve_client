@@ -38,13 +38,13 @@ const MyFavourites = () => {
   // };
 
   return (
-    <div className="">
+    <div>
       <title>My Favourite Biodata | Pathway</title>
       <PageHeading
         heading={"My Favourite Biodata"}
         text={"Save and revisit your preferred profiles"}
       />
-      <div className="">
+      <div>
         {isLoading ? (
           <DashboardSkeleton />
         ) : favouriteBiodata.length > 0 ? (
@@ -68,7 +68,7 @@ const MyFavourites = () => {
                 <AnimatePresence>
                   {favouriteBiodata.map((biodata) => (
                     <motion.tr
-                      key={biodata.biodataId}
+                      key={biodata._id}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
