@@ -6,6 +6,8 @@ import { FiEdit, FiPlus, FiTrash2, FiX } from "react-icons/fi";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const MyFavourites = () => {
   // *Context States
@@ -16,7 +18,11 @@ const MyFavourites = () => {
   // const [deleteConfirmation, setDeleteConfirmation] = useState(null);
 
   // *Fetch Favourite List
-  const { data: favouriteBiodata, isLoading } = useQuery({
+  const {
+    data: favouriteBiodata,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["favourite"],
     queryFn: async () => {
       const { data } = await axiosSecure("/favourites");
@@ -25,18 +31,28 @@ const MyFavourites = () => {
   });
 
   // *Handle Delete Action
-  // const handleDelete = async (id) => {
-  //   try {
-  //     await axiosSecure.delete(`/cars/${id}`);
-  //     setCars(cars.filter((car) => car._id !== id));
-  //     toast.success(`${deleteConfirmation.name} Deleted Successfully`);
-  //   } catch (e) {
-  //     toast.error(e);
-  //   } finally {
-  //     setDeleteConfirmation(null);
-  //   }
-  // };
-
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.patch(`/delete-favourite/${id}`);
+        } catch (e) {
+          toast.error(e);
+        } finally {
+          refetch();
+          toast.success(`Removed From Favourite List!`);
+        }
+      }
+    });
+  };
   return (
     <div>
       <title>My Favourite Biodata | Pathway</title>
@@ -86,6 +102,7 @@ const MyFavourites = () => {
                       <td>
                         <div>{biodata.occupation}</div>
                       </td>
+                      {/* Action Buttons */}
                       <td>
                         <motion.div
                           whileHover={{ scale: 1.1 }}
@@ -97,9 +114,9 @@ const MyFavourites = () => {
                           </Link>
                         </motion.div>
                       </td>
-                      {/* Action Buttons */}
                       <td>
                         <motion.button
+                          onClick={()=>handleDelete(biodata?.biodataId)}
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           className="text-error hover:text-error-hover"

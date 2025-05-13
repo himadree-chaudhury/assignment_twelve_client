@@ -47,7 +47,7 @@ const BiodataDetails = () => {
     } catch (error) {
       toast.error(error);
     } finally {
-      toast.success("Biodata Added To Favourite !");
+      toast.success("Biodata Added To Favourite List!");
       setIsFavourite(true);
     }
   };
@@ -69,7 +69,7 @@ const BiodataDetails = () => {
         } catch (error) {
           toast.error(error);
         } finally {
-          toast.success("Contact Request Successfully Placed !");
+          toast.success("Contact Request Successfully Placed!");
           navigate("/dashboard/contact-request");
         }
       }

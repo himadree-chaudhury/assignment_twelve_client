@@ -43,7 +43,7 @@ const MyRequests = () => {
           toast.error(e);
         } finally {
           refetch();
-          toast.success(`Contact Request Deleted Successfully`);
+          toast.success(`Contact Request Deleted Successfully!`);
         }
       }
     });
