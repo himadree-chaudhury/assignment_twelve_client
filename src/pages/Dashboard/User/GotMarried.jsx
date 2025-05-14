@@ -63,10 +63,11 @@ const GotMarried = () => {
         review: rating,
         createdAt: new Date(),
       });
-      toast.success("Story Added Successfully!");
       navigate("/");
     } catch (e) {
       toast.error(e);
+    } finally {
+      toast.success("Story Added Successfully!");
     }
   };
 

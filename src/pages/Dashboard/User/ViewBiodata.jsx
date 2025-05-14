@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
@@ -23,7 +23,11 @@ const ViewBiodata = () => {
   const [loading, setLoading] = useState(false);
 
   // *Fetch biodata details
-  const { data: biodata, isLoading } = useQuery({
+  const {
+    data: biodata,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["self-biodata", dbUser?.email],
     queryFn: async () => {
       if (!dbUser?.email) return null;
@@ -35,8 +39,10 @@ const ViewBiodata = () => {
 
   // *Handle premium request
   const handleMakePremium = async (biodata) => {
-    if (biodata?.isPremium || dbUser.role === "Premium User") {
-      toast.error("This biodata is already Premium!");
+    const { data } = await axiosSecure("/already-requested");
+
+    if (data) {
+      toast.error("This Biodata Is Already Premium!");
       return;
     }
 
@@ -60,7 +66,7 @@ const ViewBiodata = () => {
         } catch (error) {
           toast.error(error);
         } finally {
-          dbUser.role = "Biodata Premium Requested";
+          refetch();
           toast.success("Request Successful");
           setLoading(false);
         }
@@ -240,23 +246,13 @@ const ViewBiodata = () => {
 
                 {/* Make Premium Button */}
                 <div className="mt-6 flex justify-center">
-                  {dbUser.role === "User" ? (
-                    <button
-                      onClick={() => handleMakePremium(biodata)}
-                      // disabled={mutation.isLoading || biodata.isPremium}
-                      className={`btn-primary flex-centric`}
-                    >
-                      <FiDollarSign className="mr-2" />
-                      {loading ? "Processing..." : "Make Biodata Premium"}
-                    </button>
-                  ) : dbUser.role === "Premium User" ? (
-                    ""
-                  ) : (
-                    <button disabled className={`btn-primary flex-centric`}>
-                      <FiDollarSign className="mr-2" />
-                      Requested for Premium User
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleMakePremium(biodata)}
+                    className={`btn-primary flex-centric`}
+                  >
+                    <FiDollarSign className="mr-2" />
+                    {loading ? "Processing..." : "Make Biodata Premium"}
+                  </button>
                 </div>
               </div>
             ) : (

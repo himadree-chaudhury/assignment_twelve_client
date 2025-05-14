@@ -95,17 +95,7 @@ const ApproveContacts = () => {
             animate={{ opacity: 1 }}
             className="card py-12 text-center"
           >
-            <h3 className="mb-4">You haven't added any biodata yet</h3>
-            <Link to="/allcars">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary flex-centric mx-auto w-fit gap-2"
-              >
-                <FiPlus />
-                Add Your First Favourite Biodata.
-              </motion.div>
-            </Link>
+            <h3 className="mb-4">There is not any contact request yet</h3>
           </motion.div>
         )}
       </div>

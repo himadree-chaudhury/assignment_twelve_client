@@ -118,12 +118,13 @@ const EditBiodata = () => {
           biodataUpdatedTime: new Date(),
         });
       }
-      toast.success(
-        `${biodata ? "Biodata Update Successfully!" : "Biodata Added Successfully!"}`,
-      );
       navigate("/dashboard/view-biodata");
     } catch (e) {
       toast.error(e);
+    } finally {
+      toast.success(
+        `${biodata ? "Biodata Update Successfully!" : "Biodata Added Successfully!"}`,
+      );
     }
   };
 

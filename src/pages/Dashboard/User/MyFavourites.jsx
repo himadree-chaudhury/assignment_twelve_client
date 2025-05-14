@@ -2,7 +2,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FiEdit, FiPlus, FiTrash2, FiX } from "react-icons/fi";
+import { FiEye, FiPlus, FiTrash2, FiX } from "react-icons/fi";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
@@ -53,6 +53,7 @@ const MyFavourites = () => {
       }
     });
   };
+
   return (
     <div>
       <title>My Favourite Biodata | Pathway</title>
@@ -104,19 +105,19 @@ const MyFavourites = () => {
                       </td>
                       {/* Action Buttons */}
                       <td>
-                        <motion.div
+                        <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="text-warning hover:text-warning-hover"
+                          className="text-success hover:text-success-hover"
                         >
-                          <Link to={`/updatecar`}>
-                            <FiEdit className="h-5 w-5" />
+                          <Link to={`/biodata-details/${biodata?.biodataId}`}>
+                            <FiEye className="h-5 w-5" />
                           </Link>
-                        </motion.div>
+                        </motion.button>
                       </td>
                       <td>
                         <motion.button
-                          onClick={()=>handleDelete(biodata?.biodataId)}
+                          onClick={() => handleDelete(biodata?.biodataId)}
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           className="text-error hover:text-error-hover"

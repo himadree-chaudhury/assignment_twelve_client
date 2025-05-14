@@ -5,7 +5,7 @@ const BioDataCard = ({ bio: biodata }) => {
     <div className="flex max-w-sm flex-col rounded-lg border border-gray-200 shadow-md transition-shadow duration-300 hover:shadow-lg">
       {/* Profile Image */}
       <img
-        className="rounded-t-lg object-cover"
+        className="h-72 rounded-t-lg object-cover"
         src={biodata.profileImage || "https://via.placeholder.com/300x200"}
         alt={`${biodata.name}'s profile`}
       />
@@ -47,7 +47,7 @@ const BioDataCard = ({ bio: biodata }) => {
         </p>
 
         {/* View Details Button */}
-        <Link to={`/biodata-details/${biodata._id}`}>
+        <Link to={`/biodata-details/${biodata?.biodataId}`}>
           <button className="btn-primary my-2 w-full">View Details</button>
         </Link>
       </div>
