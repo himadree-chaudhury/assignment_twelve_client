@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // *Redirect path after login (default is "/")
+  const from = location.state?.from?.pathname || "/";
+
   // *Context States
   const { signIn, signInWithGoogle, loading } = useAuth();
 
@@ -28,9 +34,11 @@ const Login = () => {
     setError("");
     try {
       await signIn(data.email, data.password);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       setError(error.message);
+    } finally {
+      toast.success("Login Successful!");
     }
   };
 
@@ -38,9 +46,11 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle();
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       setError(error.message);
+    } finally {
+      toast.success("Login Successful!");
     }
   };
 

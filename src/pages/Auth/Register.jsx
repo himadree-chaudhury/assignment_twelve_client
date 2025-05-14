@@ -13,6 +13,7 @@ import {
   FiImage,
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       setError(error.message);
+    } finally {
+      toast.success("Registration Successful");
     }
   };
 
@@ -53,7 +56,8 @@ const Register = () => {
       navigate("/");
     } catch (error) {
       setError(error.message);
-      console.error("Google sign-in error:", error);
+    } finally {
+      toast.success("Google Sign-in Successful");
     }
   };
 

@@ -21,6 +21,7 @@ import { Outlet, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { Stack, Typography } from "@mui/material";
+import Login from "../pages/Auth/Login";
 
 // Base navigation items
 const BASE_NAVIGATION = [
@@ -231,7 +232,7 @@ const Dashboard = () => {
                       },
                     },
                     avatar: {
-                      variant: "rounded",
+                      variant: "circular",
                     },
                   },
                 },

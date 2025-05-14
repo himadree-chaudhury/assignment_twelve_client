@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { FiEdit, FiUpload, FiUser, FiMail, FiShield } from "react-icons/fi";
+import {
+  FiEdit,
+  FiUpload,
+  FiUser,
+  FiMail,
+  FiShield,
+  FiAward,
+} from "react-icons/fi";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { imageUpload } from "../../../api/imageUpload";
 import cover from "../../../assets/banner4.jpg";
 
 const UserProfile = () => {
-  const { dbUser: user, updateUserProfile } = useAuth();
-  console.log(user);
+  const { dbUser: user, updateUserProfile, user: google } = useAuth();
+  console.log(google);
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -25,15 +32,17 @@ const UserProfile = () => {
   });
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       await updateUserProfile(data.displayName, user.photoURL);
-      await axiosSecure.patch(`/users/${user.email}`, {
+      await axiosSecure.patch(`/update-user`, {
         displayName: data.displayName,
       });
       toast.success("Name updated successfully!");
-      setIsEditing(false);
     } catch (error) {
-      toast.error(error.message || "Failed to update name");
+      toast.error(error.message || "Failed To Update Name");
+    } finally {
+      setIsEditing(false);
     }
   };
 
@@ -41,11 +50,12 @@ const UserProfile = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    
     try {
       setIsUploadingImage(true);
       const imageUrl = await imageUpload(file);
       await updateUserProfile(user.displayName, imageUrl);
-      await axiosSecure.patch(`/users/${user.email}`, {
+      await axiosSecure.patch(`/update-user`, {
         photoURL: imageUrl,
       });
       toast.success("Profile image updated successfully!");
@@ -85,44 +95,46 @@ const UserProfile = () => {
         <div className="mt-4 space-y-4">
           <div className="flex items-center justify-between">
             {isEditing ? (
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-col items-start gap-2 space-x-2 md:flex-row"
-              >
-                <input
-                  type="text"
-                  {...register("displayName", {
-                    required: "Name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Name must be at least 3 characters",
-                    },
-                  })}
-                  className={`rounded border px-4 py-[7px] ${
-                    errors.displayName && "border-error focus:ring-error"
-                  }`}
-                />
-                {errors.displayName && (
-                  <p className="error-massage text-sm text-red-500">
-                    {errors.displayName.message}
-                  </p>
-                )}
-                <div className="flex-centric gap-2">
-                  <button
-                    type="submit"
-                    className="btn-primary bg-success hover:bg-success-hover py-2"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setIsEditing(false)}
-                    className="btn-primary bg-error hover:bg-error-hover py-2"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
+              <div className="flex-centric flex-col items-start gap-2 md:flex-row">
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col items-start gap-2 space-x-2 md:flex-row"
+                >
+                  <input
+                    type="text"
+                    {...register("displayName", {
+                      required: "Name is required",
+                      minLength: {
+                        value: 3,
+                        message: "Name must be at least 3 characters",
+                      },
+                    })}
+                    className={`rounded border px-4 py-[7px] ${
+                      errors.displayName && "border-error focus:ring-error"
+                    }`}
+                  />
+                  {errors.displayName && (
+                    <p className="error-massage text-sm text-red-500">
+                      {errors.displayName.message}
+                    </p>
+                  )}
+                  <div>
+                    <button
+                      type="submit"
+                      className="btn-primary bg-success hover:bg-success-hover py-2"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+                <button
+                  type="button"
+                  onClick={() => setIsEditing(false)}
+                  className="btn-primary bg-error hover:bg-error-hover py-2"
+                >
+                  Cancel
+                </button>
+              </div>
             ) : (
               <>
                 <h2 className="flex items-center text-2xl font-semibold">
@@ -140,6 +152,11 @@ const UserProfile = () => {
             <FiShield className="mr-2" />
             <strong className="mr-2">Role:</strong>
             {user?.role}
+          </p>
+          <p className="flex items-center">
+            <FiAward className="mr-2" />
+            <strong className="mr-2">Membership:</strong>
+            {user?.isPremiumMember ? "Premium" : "Normal"}
           </p>
         </div>
 

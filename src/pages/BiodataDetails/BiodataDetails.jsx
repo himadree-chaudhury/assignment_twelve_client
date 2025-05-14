@@ -201,14 +201,7 @@ const BiodataDetails = () => {
       {/* Contact Information Section */}
       <div className="card mt-8">
         <h3 className="mb-4 text-center">Contact Information</h3>
-        {biodata.isPremium ? (
-          <button
-            className="btn-primary"
-            onClick={() => handlePremiumContactRequest()}
-          >
-            Request Contact Information
-          </button>
-        ) : (
+        {dbUser.isPremiumMember ? (
           <div className="space-y-2">
             <p>
               <strong>Contact Email:</strong> {biodata.contactEmail}
@@ -217,6 +210,13 @@ const BiodataDetails = () => {
               <strong>Mobile Number:</strong> {biodata.mobileNumber}
             </p>
           </div>
+        ) : (
+          <button
+            className="btn-primary"
+            onClick={() => handlePremiumContactRequest()}
+          >
+            Request Contact Information
+          </button>
         )}
       </div>
 
