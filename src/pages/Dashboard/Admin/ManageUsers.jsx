@@ -4,21 +4,24 @@ import { useQuery } from "@tanstack/react-query";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
-import { FiTrash2, FiUserCheck } from "react-icons/fi";
+import { FiSearch, FiTrash2, FiUserCheck } from "react-icons/fi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
+  const [searchTerm, setSearchTerm] = useState("");
+
   // *Fetch Users
   const {
     data: users,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["users", searchTerm],
     queryFn: async () => {
-      const { data } = await axiosSecure("/all-users");
+      const { data } = await axiosSecure(`/all-users?search=${searchTerm}`);
       return data;
     },
   });
@@ -59,6 +62,17 @@ const ManageUsers = () => {
         heading={"Manage Users"}
         text={"Oversee and support all platform members"}
       />
+      <div>
+        <div className="relative my-5 w-full md:w-96">
+          <FiSearch className="absolute top-1/2 left-3 -translate-y-1/2 transform" />
+          <input
+            type="text"
+            placeholder="Search user by username..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      </div>
       <div>
         {isLoading ? (
           <DashboardSkeleton />
@@ -132,7 +146,7 @@ const ManageUsers = () => {
             animate={{ opacity: 1 }}
             className="card py-12 text-center"
           >
-            <h3 className="mb-4">There is no user now !</h3>
+            <h3 className="mb-4">There is no user !</h3>
           </motion.div>
         )}
       </div>
