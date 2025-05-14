@@ -94,7 +94,7 @@ const MyRequests = () => {
                       </td>
                       <td>
                         <div
-                          className={`${biodata.status === "approved" ? "border-pink-600 bg-pink-200" : "border-amber-600 bg-amber-200"} rounded-2xl border px-2 py-1 text-center`}
+                          className={`${biodata.status === "approved" ? "border-pink-600 bg-pink-200" : "border-amber-600 bg-amber-200"} rounded-2xl border px-2 py-1 text-center text-black`}
                         >
                           {biodata.status === "approved"
                             ? "Approved"

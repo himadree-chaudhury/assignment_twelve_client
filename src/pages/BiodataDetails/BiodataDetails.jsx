@@ -64,14 +64,15 @@ const BiodataDetails = () => {
       confirmButtonText: "Yes, confirm!",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        try {
-          await axiosSecure.post(`/contact-request/${biodata?.biodataId}`);
-        } catch (error) {
-          toast.error(error);
-        } finally {
-          toast.success("Contact Request Successfully Placed!");
-          navigate("/dashboard/contact-request");
-        }
+        navigate(`/dashboard/checkout/${biodata?.biodataId}`);
+        // try {
+        //   await axiosSecure.post(`/contact-request/${biodata?.biodataId}`);
+        // } catch (error) {
+        //   toast.error(error);
+        // } finally {
+        //   toast.success("Contact Request Successfully Placed!");
+        //   navigate("/dashboard/contact-request");
+        // }
       }
     });
   };

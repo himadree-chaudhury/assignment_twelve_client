@@ -21,6 +21,7 @@ import ApproveStories from "../pages/Dashboard/Admin/ApproveStories";
 import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
 import PrivateRoute from "./PrivateRoute";
 import UserProfile from "../pages/Dashboard/Common/UserProfile";
+import Checkout from "../pages/Dashboard/Payment/Checkout";
 
 const route = createBrowserRouter([
   {
@@ -81,6 +82,14 @@ const route = createBrowserRouter([
         element: (
           <PrivateRoute>
             <Statistics />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "checkout/:id",
+        element: (
+          <PrivateRoute>
+            <Checkout />
           </PrivateRoute>
         ),
       },

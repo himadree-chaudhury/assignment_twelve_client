@@ -15,8 +15,7 @@ import { imageUpload } from "../../../api/imageUpload";
 import cover from "../../../assets/banner4.jpg";
 
 const UserProfile = () => {
-  const { dbUser: user, updateUserProfile, user: google } = useAuth();
-  console.log(google);
+  const { dbUser: user, updateUserProfile } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isEditing, setIsEditing] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -32,7 +31,6 @@ const UserProfile = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       await updateUserProfile(data.displayName, user.photoURL);
       await axiosSecure.patch(`/update-user`, {
