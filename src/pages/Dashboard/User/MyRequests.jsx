@@ -68,6 +68,7 @@ const MyRequests = () => {
                     "Name",
                     "Biodata ID",
                     "Status",
+                    "Transaction ID",
                     "Mobile No.",
                     "Email",
                     "Delete",
@@ -100,6 +101,9 @@ const MyRequests = () => {
                             ? "Approved"
                             : "Pending"}
                         </div>
+                      </td>
+                      <td>
+                        <div>{biodata.transactionID}</div>
                       </td>
                       <td>
                         <div>{biodata.mobileNo}</div>

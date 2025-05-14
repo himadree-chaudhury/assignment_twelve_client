@@ -88,11 +88,16 @@ const ApproveContacts = () => {
             <table className="table-container min-w-full">
               <thead className="table-head">
                 <tr>
-                  {["Name", "Email", "Biodata ID", "Status", "Actions"].map(
-                    (heading, index) => (
-                      <th key={index}>{heading}</th>
-                    ),
-                  )}
+                  {[
+                    "Name",
+                    "Email",
+                    "Biodata ID",
+                    "Transaction ID",
+                    "Status",
+                    "Actions",
+                  ].map((heading, index) => (
+                    <th key={index}>{heading}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -113,6 +118,9 @@ const ApproveContacts = () => {
                       </td>
                       <td>
                         <div>{request.biodataId}</div>
+                      </td>
+                      <td>
+                        <div>{request.transactionID}</div>
                       </td>
                       <td>
                         <div
