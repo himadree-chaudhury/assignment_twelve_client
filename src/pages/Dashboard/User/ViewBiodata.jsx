@@ -60,7 +60,7 @@ const ViewBiodata = () => {
         try {
           setLoading(true);
           await axiosSecure.post("/premium-request", {
-            requestedName: biodata.name,
+            requestedName: dbUser?.name,
             requestedBiodataId: biodata.biodataId,
           });
         } catch (error) {

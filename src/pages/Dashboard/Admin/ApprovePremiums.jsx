@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import PageHeading from "../../../components/Shared/Utilities/PageHeading";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import DashboardSkeleton from "../Common/DashboardSkeleton";
-import { FiUserCheck, FiUserX } from "react-icons/fi";
+import { FiEye, FiUserCheck, FiUserX } from "react-icons/fi";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { Link } from "react-router";
 
 const ApprovePremiums = () => {
   const axiosSecure = useAxiosSecure();
@@ -87,11 +88,16 @@ const ApprovePremiums = () => {
             <table className="table-container min-w-full">
               <thead className="table-head">
                 <tr>
-                  {["Name", "Email", "Biodata ID", "Status", "Actions"].map(
-                    (heading, index) => (
-                      <th key={index}>{heading}</th>
-                    ),
-                  )}
+                  {[
+                    "Name",
+                    "Email",
+                    "Biodata ID",
+                    "View Biodata",
+                    "Status",
+                    "Actions",
+                  ].map((heading, index) => (
+                    <th key={index}>{heading}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
@@ -112,6 +118,13 @@ const ApprovePremiums = () => {
                       </td>
                       <td>
                         <div>{request.requestedBiodataId}</div>
+                      </td>
+                      <td>
+                        <Link
+                          to={`/biodata-details/${request?.requestedBiodataId}`}
+                        >
+                          <FiEye className="text-success hover:text-success-hover h-5 w-5" />
+                        </Link>
                       </td>
                       <td>
                         <div

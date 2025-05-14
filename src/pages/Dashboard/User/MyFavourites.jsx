@@ -134,7 +134,7 @@ const MyFavourites = () => {
             className="card py-12 text-center"
           >
             <h3 className="mb-4">You haven't added any biodata yet</h3>
-            <Link to="/allcars">
+            <Link to="/all-biodata">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
