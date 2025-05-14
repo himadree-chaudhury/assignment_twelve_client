@@ -11,11 +11,7 @@ import toast from "react-hot-toast";
 
 const MyFavourites = () => {
   // *Context States
-  // const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-
-  // *Delete State
-  // const [deleteConfirmation, setDeleteConfirmation] = useState(null);
 
   // *Fetch Favourite List
   const {
