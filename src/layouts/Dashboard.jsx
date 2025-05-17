@@ -135,9 +135,10 @@ const Dashboard = () => {
     return {
       signOut: () => {
         setSession(null);
+        navigate("/login");
       },
     };
-  }, [client]);
+  }, [client, navigate]);
 
   // Handle logout
   const handleSignOut = async () => {
@@ -155,12 +156,6 @@ const Dashboard = () => {
       "contact-request",
       "favourite-biodata",
       "got-married",
-      // admin routes
-      "statistics",
-      "manage-users",
-      "approved-premium",
-      "approved-contact-request",
-      "success-story",
     ];
     const adminNavSegments = [
       "statistics",
@@ -168,13 +163,6 @@ const Dashboard = () => {
       "approved-premium",
       "approved-contact-request",
       "success-story",
-      // normal routes
-      "statistics",
-      "edit-biodata",
-      "view-biodata",
-      "contact-request",
-      "favourite-biodata",
-      "got-married",
     ];
 
     return BASE_NAVIGATION.filter((item) => {

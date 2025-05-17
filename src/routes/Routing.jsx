@@ -22,6 +22,7 @@ import BiodataDetails from "../pages/BiodataDetails/BiodataDetails";
 import PrivateRoute from "./PrivateRoute";
 import UserProfile from "../pages/Dashboard/Common/UserProfile";
 import Checkout from "../pages/Dashboard/Payment/Checkout";
+import AdminRoute from "./AdminRoute";
 
 const route = createBrowserRouter([
   {
@@ -93,6 +94,14 @@ const route = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <UserProfile />
+          </PrivateRoute>
+        ),
+      },
       // Normal user routes
       {
         path: "edit-biodata",
@@ -139,7 +148,9 @@ const route = createBrowserRouter([
         path: "manage-users",
         element: (
           <PrivateRoute>
-            <ManageUsers />
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -147,7 +158,9 @@ const route = createBrowserRouter([
         path: "approved-premium",
         element: (
           <PrivateRoute>
-            <ApprovePremiums />
+            <AdminRoute>
+              <ApprovePremiums />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -155,7 +168,9 @@ const route = createBrowserRouter([
         path: "approved-contact-request",
         element: (
           <PrivateRoute>
-            <ApproveContacts />
+            <AdminRoute>
+              <ApproveContacts />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },
@@ -163,15 +178,9 @@ const route = createBrowserRouter([
         path: "success-story",
         element: (
           <PrivateRoute>
-            <ApproveStories />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "profile",
-        element: (
-          <PrivateRoute>
-            <UserProfile />
+            <AdminRoute>
+              <ApproveStories />
+            </AdminRoute>
           </PrivateRoute>
         ),
       },

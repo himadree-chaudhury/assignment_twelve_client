@@ -3,10 +3,10 @@ import { Navigate } from "react-router";
 import useRole from "../hooks/useRole";
 
 const AdminRoute = ({ children }) => {
-  const [role, isAdmin] = useRole();
+  const [role, isLoading] = useRole();
 
-  // if (isLoading) return <LoadingSpinner />;
-  if (role === "Admin" && isAdmin) return children;
+  if (isLoading) return <LoadingSpinner />;
+  if (role.role === "Admin" && role.isAdmin) return children;
   return <Navigate to="/dashboard" replace="true" />;
 };
 

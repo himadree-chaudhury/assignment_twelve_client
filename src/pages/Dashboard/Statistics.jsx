@@ -5,17 +5,22 @@ import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
 
 const Statistics = () => {
-  const { user } = useAuth();
-  const [role, isAdmin] = useRole();
+  const { dbUser } = useAuth();
+  const [role] = useRole();
   return (
     <div>
       <title>Dashboard | Pathway</title>
       <PageHeading
-        heading={`Welcome To Dashboard, ${user?.displayName}`}
+        heading={`Welcome To Dashboard, ${dbUser?.displayName}`}
         text={"Manage your journey to love with ease"}
       />
-      {role === "Admin" && isAdmin && <AdminStat />}
-      {role === "User" && !isAdmin && <UserStat />}
+      {role?.role === "Admin" && role?.isAdmin ? (
+        <AdminRoute>
+          <AdminStat />
+        </AdminRoute>
+      ) : (
+        <UserStat />
+      )}
     </div>
   );
 };

@@ -94,7 +94,6 @@ export const AuthProvider = ({ children }) => {
         );
         setDBUser(data);
         setLoading(false);
-        // console.log(data);
       }
     });
     return () => unsubscribe();
