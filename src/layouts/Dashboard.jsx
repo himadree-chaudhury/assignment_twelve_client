@@ -133,12 +133,13 @@ const Dashboard = () => {
       },
     });
     return {
-      signOut: () => {
+      signOut: async () => {
         setSession(null);
+        await logOut();
         navigate("/login");
       },
     };
-  }, [client, navigate]);
+  }, [client, navigate, logOut]);
 
   // Handle logout
   const handleSignOut = async () => {

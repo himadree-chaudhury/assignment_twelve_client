@@ -18,8 +18,8 @@ import toast from "react-hot-toast";
 const Register = () => {
   const navigate = useNavigate();
   // *Context States
-  const { createUser, signInWithGoogle, updateUserProfile, loading } =
-    useAuth();
+  const { createUser, signInWithGoogle, updateUserProfile } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   // *Data States
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +35,7 @@ const Register = () => {
   // *Handle Form Submission
   const onSubmit = async (data) => {
     setError("");
+    setLoading(true);
     try {
       // *Create User With Email And Password
       await createUser(data.email, data.password);
@@ -45,18 +46,21 @@ const Register = () => {
     } catch (error) {
       setError(error.message);
     } finally {
+      setLoading(false);
       toast.success("Registration Successful");
     }
   };
 
   // *Handle Google Sign-In
   const handleGoogleSignIn = async () => {
+    setLoading(true);
     try {
       await signInWithGoogle();
       navigate("/");
     } catch (error) {
       setError(error.message);
     } finally {
+      setLoading(false);
       toast.success("Google Sign-in Successful");
     }
   };

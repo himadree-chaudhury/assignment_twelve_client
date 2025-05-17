@@ -3,6 +3,7 @@ import UserStat from "../../components/Dashboard/Stat/UserStat";
 import PageHeading from "../../components/Shared/Utilities/PageHeading";
 import useAuth from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
+import AdminRoute from "../../routes/AdminRoute";
 
 const Statistics = () => {
   const { dbUser } = useAuth();

@@ -16,7 +16,8 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   // *Context States
-  const { signIn, signInWithGoogle, loading } = useAuth();
+  const { signIn, signInWithGoogle } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   // *Data States
   const [showPassword, setShowPassword] = useState(false);
@@ -32,24 +33,28 @@ const Login = () => {
   // *Handle Form Submission For Email/Password Login
   const onSubmit = async (data) => {
     setError("");
+    setLoading(true)
     try {
       await signIn(data.email, data.password);
       navigate(from, { replace: true });
     } catch (error) {
       setError(error.message);
     } finally {
+      setLoading(false)
       toast.success("Login Successful!");
     }
   };
 
   // *Handle Google Sign-In
   const handleGoogleSignIn = async () => {
+    setLoading(true);
     try {
       await signInWithGoogle();
       navigate(from, { replace: true });
     } catch (error) {
       setError(error.message);
     } finally {
+      setLoading(false);
       toast.success("Login Successful!");
     }
   };
