@@ -29,8 +29,8 @@ const SuccessCounter = () => {
   // *Card stats
   const stats = [
     { label: "Total Biodata", value: totalBiodata },
-    { label: "Girl's Biodata", value: totalGirls },
-    { label: "Boy's Biodata", value: totalBoys },
+    { label: "Male's Biodata", value: totalGirls },
+    { label: "Female's Biodata", value: totalBoys },
     {
       label: "Successful Marriage",
       value: totalMarriage,
@@ -38,7 +38,7 @@ const SuccessCounter = () => {
   ];
 
   return (
-    <div className="section-layout grid grid-cols-1 gap-8 sm:grid-cols-4">
+    <div className="section-layout grid grid-cols-2 gap-8 sm:grid-cols-4">
       {stats.map((stat, index) => (
         <div key={stat.label} className="card text-center">
           <GradientText>
@@ -52,7 +52,7 @@ const SuccessCounter = () => {
               className="mb-2 text-5xl font-semibold"
             />
           </GradientText>
-          <p>{stat.label}</p>
+          <p className="font-medium">{stat.label}</p>
         </div>
       ))}
     </div>

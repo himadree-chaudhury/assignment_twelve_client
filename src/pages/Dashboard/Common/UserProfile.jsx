@@ -48,7 +48,6 @@ const UserProfile = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    
     try {
       setIsUploadingImage(true);
       const imageUrl = await imageUpload(file);

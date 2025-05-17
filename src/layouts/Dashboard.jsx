@@ -168,6 +168,13 @@ const Dashboard = () => {
       "approved-premium",
       "approved-contact-request",
       "success-story",
+      // normal routes
+      "statistics",
+      "edit-biodata",
+      "view-biodata",
+      "contact-request",
+      "favourite-biodata",
+      "got-married",
     ];
 
     return BASE_NAVIGATION.filter((item) => {
