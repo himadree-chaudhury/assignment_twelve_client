@@ -35,7 +35,7 @@ const ManageUsers = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, confirm it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
@@ -52,7 +52,26 @@ const ManageUsers = () => {
 
   // *Handle make premium
   const handlePremium = async (email) => {
-    console.log(email);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, confirm it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.patch(`/make-premium/${email}`);
+        } catch (e) {
+          toast.error(e);
+        } finally {
+          refetch();
+          toast.success(`User Biodata Changed To Premium!`);
+        }
+      }
+    });
   };
 
   return (

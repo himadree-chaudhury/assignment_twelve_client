@@ -33,14 +33,14 @@ const Login = () => {
   // *Handle Form Submission For Email/Password Login
   const onSubmit = async (data) => {
     setError("");
-    setLoading(true)
+    setLoading(true);
     try {
       await signIn(data.email, data.password);
       navigate(from, { replace: true });
     } catch (error) {
       setError(error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
       toast.success("Login Successful!");
     }
   };

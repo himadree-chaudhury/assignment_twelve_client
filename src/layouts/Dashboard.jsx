@@ -118,7 +118,7 @@ const demoTheme = createTheme({
 });
 
 const Dashboard = () => {
-  const { dbUser: client, logOut } = useAuth();
+  const { user, dbUser: client, logOut } = useAuth();
   const [session, setSession] = React.useState(null);
   const navigate = useNavigate();
 
@@ -126,9 +126,9 @@ const Dashboard = () => {
   const authentication = React.useMemo(() => {
     setSession({
       user: {
-        name: client?.displayName,
-        email: client?.email,
-        image: client?.photoURL,
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
         isAdmin: client?.isAdmin,
       },
     });
@@ -139,7 +139,7 @@ const Dashboard = () => {
         navigate("/login");
       },
     };
-  }, [client, navigate, logOut]);
+  }, [user, client, navigate, logOut]);
 
   // Handle logout
   const handleSignOut = async () => {
